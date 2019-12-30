@@ -1,0 +1,56 @@
+@import '../../assets/style/mixin.scss';
+.mainLeft {
+  position: absolute;
+  top: 70px;
+  left: 10px;
+  width: 250px;
+
+  .titleRow {
+    padding: 5px 10px;
+    color: #efefef;
+    line-height: 25px;
+    background: #053a9c;
+    cursor: pointer;
+
+    &.active {
+      background: #0070c6;
+    }
+
+    .iconfont {
+      margin: 0 5px;
+      vertical-align: middle;
+      font-weight: normal;
+      @include sc(20px, #fff);
+    }
+  }
+
+  .listMain {
+    margin: 10px auto;
+    padding: 2px 1px;
+    max-height: 200px;
+    background: linear-gradient(to left, #00b9ff, #00b9ff) left top no-repeat,
+      linear-gradient(to bottom, #00b9ff, #00b9ff) left top no-repeat,
+      linear-gradient(to left, #00b9ff, #00b9ff) right top no-repeat,
+      linear-gradient(to bottom, #00b9ff, #00b9ff) right top no-repeat,
+      linear-gradient(to left, #00b9ff, #00b9ff) left bottom no-repeat,
+      linear-gradient(to bottom, #00b9ff, #00b9ff) left bottom no-repeat,
+      linear-gradient(to left, #00b9ff, #00b9ff) right bottom no-repeat,
+      linear-gradient(to left, #00b9ff, #00b9ff) right bottom no-repeat;
+    background-size: 1px 10px,
+      10px 1px,
+      1px 10px,
+      10px 1px;
+    background-color: rgba(0, 21, 53, 0.77);
+    border: 1px solid #053997;
+    li{
+      padding-left: 15px;
+      font-size: 16px;
+      line-height: 30px;
+      cursor: pointer;
+      &.active{
+        font-weight: bold;
+        color: #00b9ff;
+      }
+    }
+  }
+}

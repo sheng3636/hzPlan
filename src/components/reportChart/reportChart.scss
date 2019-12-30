@@ -1,0 +1,32 @@
+@import '../../assets/style/mixin.scss';
+#reportChart {
+  position: absolute;
+  bottom: 30px;
+  right: 415px;
+  @include wh(430px,500px);
+}
+.documentType{
+  top: 15px;
+  width: 800px;
+  z-index: 999;
+  align-items: center;
+  @include cl();
+  @include fj(space-between);
+  li{
+    border-radius: 10px;
+    border: 1px solid rgba(102, 153, 255, 1);
+    background: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    @include fj(center);
+    @include sc(25px,#000);
+    @include wh(260px,108px);
+    p{
+      &:nth-child(2){
+        font-size: 32px;
+        font-weight: bold;
+      }
+    }
+  }
+}

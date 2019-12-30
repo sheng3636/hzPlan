@@ -1,0 +1,87 @@
+@import '../../assets/style/mixin.scss';
+.chooseDocumetDialog {
+  .inner{
+    padding: 10px 20px;
+    max-height: 650px;
+    @include sc(16px,#fff);
+    .documentInfo {
+      position: relative;
+      margin-bottom: 20px;
+      height: 35px;
+      .middleLine{
+        background: #fff;
+        z-index: 0;
+        @include wh(100%,1px);
+        @include center();
+      }
+
+      .infoItem {
+        position: absolute;
+        display: block;
+        width: 150px;
+        line-height: 35px;
+        background: rgb(18, 132, 187);
+        text-align: center;
+        border-radius: 5px;
+
+        &:nth-child(1) {
+          left: 0;
+        }
+
+        &:nth-child(2) {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        &:nth-child(3) {
+          right: 0;
+        }
+      }
+    }
+    .documentItem {
+      li {
+        position: relative;
+        margin-bottom: 15px;
+        line-height: 55px;
+        text-align: center;
+        border-radius: 5px;
+        border: 1px solid #fff;
+        @include sc(20px, #fff);
+        span{
+          position: absolute;
+          right: 15px;
+          color: rgb(102, 204, 255);
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+    .searchWrap{
+      position: relative;
+      margin-bottom: 15px;
+      .searchValue{
+        margin:0 auto;
+        display: block;
+        width: 400px;
+      }
+      .tabRow {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        .articleType {
+          display: inline-block;
+          margin-right: 15px;
+          cursor: pointer;
+          &.active{
+            color: #66ccff;
+          }
+        }
+
+      }
+    }
+
+    .content {
+      max-height: 560px;
+    }
+  }
+}

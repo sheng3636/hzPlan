@@ -1,0 +1,40 @@
+@import '../../assets/style/mixin.scss';
+.myEcollectDialog {
+  .inner{
+    padding: 10px 20px;
+    max-height: 650px;
+    .ecollectClass {
+      position: relative;
+      padding-left: 40px;
+      @include sc(24px,#fff);
+      &::before{
+       position: absolute;
+       top: 50%;
+       left: 5px;
+       transform: translateY(-50%);
+        content: '';
+        display: block;
+        width: 25px;
+        height: 25px;
+        background: #fff;
+      }
+    }
+    .ecolllectList{
+      margin: 10px auto;
+      padding:10px;
+      width: 95%;
+      border-radius: 5px;
+      border: 1px solid #fff;
+      .title {
+        @include sc(22px, #fff);
+      }
+      .content{
+        color: #fff;
+        text-indent: 27px;
+      }
+      #hotWord {
+        @include wh(100%, 300px);
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+@import '../../assets/style/mixin.scss';
+.header {
+  height: 65px;
+  font-size: 16px;
+  background: rgba(101, 132, 226, .1);
+  border-bottom: 1px solid rgba(101, 132, 226, 0.3);
+  @include fj(space-between);
+  .logo{
+    padding-left: 45px;
+    line-height: 65px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .nav {
+    align-items: center;
+    @include wh(1300px, 65px);
+    @include fj(space-around);
+
+    .router-link-active {
+      color: #eddd12;
+    }
+  }
+}

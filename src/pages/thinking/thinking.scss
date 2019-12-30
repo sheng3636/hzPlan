@@ -1,0 +1,318 @@
+@import '../../assets/style/mixin.scss';
+
+// 左边选择区域
+.selectWrap{
+  position: absolute;
+  top: 70px;
+  left: 270px;
+  width: 130px;
+  li{
+    margin-bottom: 5px;
+    select {
+      display: block;
+      width: 100%;
+      height: 25px;
+      text-align: center;
+    }
+    button{
+      width: 100%;
+    }
+  }
+}
+// 右侧区域
+.mainRight{
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  width: 405px;
+}
+.collectWrap {
+  cursor: pointer;
+  @include fj(flex-end);
+  i{
+    font-size: 22px;
+    &:nth-child(1){
+      margin-right: 10px;
+    }
+  }
+}
+.rightList {
+  margin-top: 10px;
+  .titleRow {
+    padding: 5px 10px;
+    color: #efefef;
+    line-height: 25px;
+    background: #053a9c;
+    text-align: center;
+    cursor: pointer;
+
+    &.active {
+      background: #0070c6;
+    }
+  }
+  .listMain{
+    padding-bottom: 10px;
+    margin: 10px auto;
+    border: 1px solid rgba(22, 155, 213, 1);
+  }
+}
+.constractArea {
+  .tagWrap {
+    margin: 10px auto;
+    @include wh(95%, 155px);
+    flex-wrap: wrap;
+    align-items: space-between;
+    align-content: space-between;
+    @include fj(space-between);
+
+    .tagItem {
+      display: block;
+      @include wh(110px, 40px);
+      line-height: 40px;
+      text-align: center;
+      border-radius: 5px;
+      font-size: 16px;
+      border: 1px solid rgba(121, 121, 121, 1);
+
+      &.active {
+        border: none;
+        background: rgba(0, 129, 255, 1);
+      }
+    }
+  }
+
+  .blueLine {
+    margin: 5px auto 10px auto;
+    background: rgba(22, 155, 213, 1);
+    @include wh(90%, 1px);
+  }
+
+  .constructWrap {
+    margin: 0 auto;
+    width: 90%;
+    max-height: 555px;
+    .constructItem {
+      padding: 10px;
+      margin-bottom: 10px;
+      width: calc(100% - 5px);
+      border-radius: 5px;
+      border: 1px solid rgba(121, 121, 121, 1);
+      background: rgba(0, 129, 255, 1);
+
+      .constructTitle {
+        @include fj(space-between);
+        .contructionTool {
+          display: block!important;
+        }
+        span {
+          &:nth-child(1) {
+            font-weight: bold;
+            @include sc(20px, #FF0000);
+          }
+
+          &:nth-child(2) {
+            font-size: 22px;
+
+            i {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .abstract {
+        text-indent: 27px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical
+      }
+    }
+
+    .constructItem1 {
+      padding: 5px 10px;
+      margin-bottom: 10px;
+      width: calc(100% - 5px);
+      border-radius: 5px;
+      border: 1px solid rgba(22, 155, 213, 1);
+
+      .constructTitle {
+        .contructionTool {
+          display: none;
+        }
+        @include sc(20px, #fff);
+      }
+
+      .abstract {
+        text-indent: 27px;
+      }
+    }
+  }
+}
+.AiWirting{
+  position: relative;
+  padding:10px;
+  .el-tabs__item {
+    color: red;
+  }
+  .writingUpload{
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    z-index: 999;
+    cursor: pointer;
+  }
+  .searchValue{
+    display: block;
+    margin: 0 auto;
+    width: 85%;
+  }
+  // .writingTab{
+  //   width: 90%;
+  // }
+  .documentClass {
+    display: block;
+    margin: 10px auto;
+    width: 65%;
+  }
+  .matterClass {
+    margin: 10px auto;
+    @include wh(95%, 170px);
+    flex-wrap: wrap;
+    align-items: space-between;
+    align-content: space-between;
+    @include fj(space-between);
+    .matterItem{
+      display: block;
+      line-height: 35px;
+      text-align: center;
+      border-radius: 5px;
+      background: rgba(0, 129, 255, 1);
+      @include wh(110px,35px);
+    }
+  }
+  .searchResultWrap {
+    max-height: 450px;
+    .resultItem{
+      margin-bottom: 10px;
+      padding:10px;
+      width: calc(100% - 5px);
+      border: 1px solid #fff;
+      border-radius: 15px;
+      .resultTitle{
+        @include sc(18px,#fff);
+        i{
+          float: right;
+          font-size: 18px;
+          cursor: pointer;
+        }
+      }
+      .resultTxt {
+        margin: 5px auto;
+        height: 75px;
+        text-indent: 25px;
+        overflow: hidden;
+      }
+      .resultUnfold{
+        margin-left: 5px;
+        color: #169BD5;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}
+// 选择温州弹出的菜单
+.selectmenu {
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+  border-radius: 5px;
+  background: #fff;
+  color: #333;
+  li {
+    line-height: 25px;
+    cursor: pointer;
+    i{
+      margin-left: 5px;
+      margin-right: 10px;
+      @include sc(18px, #66ccff)
+    }
+  }
+}
+// 摘编弹框
+.excerptModal{
+  position: absolute;
+  top: 498px;
+  right: 50px;
+  z-index: 9999;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.5);
+  @include wh(330px,175px);
+  .textArea {
+    display: block;
+  }
+  .excerptFoot{
+    margin-top: 5px;
+    @include fj(flex-end);
+    span{
+      display: block;
+      cursor: pointer;
+      &:nth-child(2) {
+        margin: 0 10px;
+      }
+      i{
+        padding: 1px;
+        margin-right: 3px;
+        border: 1px solid #fff;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+// 地图悬浮框样式
+.documentWrap {
+  position: absolute;
+  top: 50px;
+  left: 30px;
+  z-index: 999;
+  width: 550px;
+  border-radius: 5px;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 0 10px 5px #aaa;
+
+  .header {
+    padding: 0 15px;
+    line-height: 50px;
+    width: 100%;
+    border-radius: 5px;
+    border-bottom: 1px solid #F0F0F0;
+    background: #F8F9F9;
+    @include wh(100%, 50px);
+    @include fj(space-between);
+
+    span {
+      &:nth-child(2) {
+        color: #5396E3;
+        i{
+          margin-left: 10px;
+          cursor: pointer;
+          vertical-align: middle;
+          @include sc(24px,#ccc);
+        }
+      }
+    }
+  }
+
+  .content {
+    padding: 10px;
+    width: 100%;
+    max-height: 310px;
+    background: #fff;
+    white-space: pre-wrap
+  }
+}
