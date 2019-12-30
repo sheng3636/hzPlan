@@ -1,6 +1,6 @@
 @import '../../assets/style/mixin.scss';
 // 历史借鉴-智能写作-文档上传弹窗
-.uploadDocumentDialog {
+.uploadDocuDialog {
   .inner {
     .uploadArea {
       margin: 20px auto;
@@ -9,6 +9,7 @@
 
     .formUploadForm {
       margin: 0 auto;
+      display:flex;
       text-align: center;
     }
   }

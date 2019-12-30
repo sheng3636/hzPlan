@@ -135,7 +135,7 @@
         <li>
           <h3 class="titleRow" :class="{'active':!rightHistoryTab}" @click="historyTabClick">智能写作</h3>
           <div class="listMain AiWirting" v-if="!rightHistoryTab">
-            <span class="writingUpload" @click="uploadDocumentClick">
+            <span class="writingUpload" @click="openUploadDocument">
               上传
               <i class="iconfont iconshangchuan"></i>
             </span>
@@ -231,8 +231,9 @@
     ></single-document>
     <!-- 文档上传 -->
     <upload-document
-      @closeUploadDocument="closeUploadDocument"
-      :upload-document-visible="uploadDocumentVisible"
+      @closeUploadDocu="closeUploadDocu"
+      @submitUploadDocu="submitUploadDocu"
+      :upload-docu-visible="uploadDocuVisible"
     ></upload-document>
     <!-- 添加摘要 -->
     <summary-info
@@ -250,7 +251,8 @@ import {
   collectStatus,
   saveSummaryInfo,
   login,
-  getGuidingThought
+  getGuidingThought,
+  uploadDocu
 } from '../../api/api'
 import axios from 'axios'
 import mUtilsFn from '@/config/mUtils.js'
@@ -295,7 +297,7 @@ export default {
       myEcollectVisible: false, // 控制我的收藏显隐
       chooseDocumetVisible: false, // 控制上位指导选择文档弹窗显隐
       singleDocumentVisible: false, // 控制文件分析弹窗显隐
-      uploadDocumentVisible: false, // 控制文档上传弹窗显隐
+      uploadDocuVisible: false, // 控制文档上传弹窗显隐
       summaryVisible: false, // 控制摘要弹窗显隐
       selectTxt: 'aaa', // 选中文字内容
       isMenu: false, // 控制选中文字后菜单是否显示
@@ -314,7 +316,6 @@ export default {
         }
       ],
       documentValue: '',
-
       DocumentsType: {} // 各市文档报告类型数据
     }
   },
@@ -591,6 +592,24 @@ export default {
         })
       })
     },
+    // 打开文档上传弹窗
+    openUploadDocument() {
+      this.uploadDocuVisible = true
+    },
+    // 关闭文档上传弹窗
+    closeUploadDocu() {
+      this.uploadDocuVisible = false
+    },
+    // 提交上传文档表单
+    submitUploadDocu(formData) {
+      uploadDocu(formData).then(res => {
+        this.uploadDocuVisible = false
+        this.$message({
+          message: res.message,
+          type: res.code === '0' ? 'success' : 'error'
+        })
+      })
+    },
     // 获取文档分析词云数据
     getCiYunFn() {
       getCiYun().then(res => {
@@ -642,14 +661,6 @@ export default {
     // 关闭文档分析弹窗
     closeSingleDocument() {
       this.singleDocumentVisible = false
-    },
-    // 打开文档上传弹窗
-    uploadDocumentClick() {
-      this.uploadDocumentVisible = true
-    },
-    // 关闭文档上传弹窗
-    closeUploadDocument() {
-      this.uploadDocumentVisible = false
     },
     chooseDocumetClick(){
       this.singleDocumentVisible = true

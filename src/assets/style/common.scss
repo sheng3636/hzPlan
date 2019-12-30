@@ -144,36 +144,15 @@ body {
     @include wh(100%, 100%);
   }
 }
-.mainLeft{
-  .el-tree {
-    background: transparent;
-    color: #fff;
-  }
-  .el-tree-node__content {
-    &:hover,
-    &:active,
-    &:focus,
-    &:visited {
-      background-color: transparent;
-    }
-  }
-}
 
-// 历史借鉴-智能写作-文档上传弹窗
-.excerptModal{
-  .el-textarea__inner{
-    background: transparent;
-    border: none;
-    @include sc(16px,#fff);
-  }
-}
-// 弹窗样式
+
+// 修改的elementui样式
 .mainWrap{
   .uploadDialog,
   .myEcollectDialog,
   .chooseDocumetDialog,
   .singleDocumetDialog,
-  .uploadDocumentDialog,
+  .uploadDocuDialog,
   .summaryDialog {
     border-radius: 10px;
     font-size: 25px;
@@ -201,10 +180,11 @@ body {
   }
 }
 .el-upload__tip,
-.el-form-item__label {
+.el-form-item__label,
+.el-upload-list__item-name,
+.el-upload-list__item-name [class^=el-icon] {
   color: #fff;
 }
-// 智能写作修改wlwmentui tab样式
 .AiWirting {
   .el-tabs__item {
     color: #fff;
