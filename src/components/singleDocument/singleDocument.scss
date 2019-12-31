@@ -5,27 +5,47 @@
     @include sc(16px,#fff);
   }
   .singleDocumentWrap{
-    .tabRow {
-      margin-bottom: 10px;
-      @include fj(flex-end);
-      .articleType {
-        display: inline-block;
-        margin-right: 15px;
-        cursor: pointer;
+    .header {
+      align-items: center;
+      @include fj(space-between);
+      .tabRow {
+        margin-bottom: 10px;
+        @include fj(space-between);
+        .articleType {
+          display: inline-block;
+          margin-right: 15px;
+          cursor: pointer;
 
-        &.active {
-          color: #66ccff;
+          &.active {
+            color: #66ccff;
+          }
         }
       }
+
     }
     .article {
       margin-bottom: 10px;
-      max-height: 450px;
-      text-indent: 27px;
+      @include fj(space-between);
+      .leftArticle,
+      .rightArticle {
+        max-height: 450px;
+        text-indent: 27px;
+      }
+      .rightArticle,
+      .halfWidth {
+        width: 50%;
+      }
     }
     #singleDocuChart{
       margin-top: 10px;
       height: 220px;
     }
+  }
+}
+.doubleChart{
+  @include fj(space-between);
+  #hotWord {
+    width: 60%;
+    height: 220px;
   }
 }

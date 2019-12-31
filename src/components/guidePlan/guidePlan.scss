@@ -1,8 +1,7 @@
 @import '../../assets/style/mixin.scss';
-.chooseDocumetDialog {
+.guidePlanDialog {
   .inner{
     padding: 10px 20px;
-    max-height: 650px;
     @include sc(16px,#fff);
     .documentInfo {
       position: relative;
@@ -59,10 +58,23 @@
     .searchWrap{
       position: relative;
       margin-bottom: 15px;
-      .searchValue{
-        margin:0 auto;
-        display: block;
+      .searchInput {
+        position: relative;
+        margin: 0 auto;
         width: 400px;
+        .searchValue {
+          padding-right: 20px;
+          display: block;
+        }
+        i {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 20px;
+          right: 34px;
+          color: #333;
+          cursor: pointer;
+        }
       }
       .tabRow {
         position: absolute;
@@ -81,7 +93,45 @@
     }
 
     .content {
-      max-height: 560px;
+      max-height: 450px;
+      .section{
+        text-indent: 27px;
+      }
+    }
+  }
+}
+
+.searchResult {
+  position: relative;
+  margin: 15px auto;
+  padding: 10px;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  .el-icon-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  li {
+    padding: 5px 0;
+    border-bottom: 2px solid #fff;
+    // align-items: center;
+    // @include fj(center);
+    p{
+      // width: 90%;
+    }
+    span{
+      width: 5%;
+      i{
+        font-size: 22px;
+        cursor: pointer;
+      }
     }
   }
 }

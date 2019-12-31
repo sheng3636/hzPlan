@@ -7,7 +7,7 @@
 }
 .documentType{
   top: 15px;
-  width: 800px;
+  width: 900px;
   z-index: 999;
   align-items: center;
   @include cl();
@@ -21,7 +21,7 @@
     align-items: center;
     @include fj(center);
     @include sc(25px,#000);
-    @include wh(260px,108px);
+    @include wh(190px,108px);
     p{
       &:nth-child(2){
         font-size: 32px;

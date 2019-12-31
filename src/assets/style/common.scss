@@ -150,20 +150,20 @@ body {
 .mainWrap{
   .uploadDialog,
   .myEcollectDialog,
-  .chooseDocumetDialog,
+  .guidePlanDialog,
   .singleDocumetDialog,
   .uploadDocuDialog,
   .summaryDialog {
     border-radius: 10px;
     font-size: 25px;
-    background: rgba(77, 121, 141, 1);
+    background: rgba(77, 121, 141, 0.95);
     color: #fff;
 
     .el-dialog__header {
       padding: 10px 20px;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
-      background: rgba(0, 129, 255, 1);
+      background: rgba(0, 129, 255, 0.6);
       text-align: center;
 
       .el-dialog__title {

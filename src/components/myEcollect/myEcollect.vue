@@ -71,8 +71,8 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-        this.hotWord()
-      })
+      this.hotWord()
+    })
   },
   methods: {
     // 关闭我的收藏弹窗

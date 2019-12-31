@@ -13,6 +13,10 @@
       <p>全会报告</p>
       <p>{{chartData.countryCount}}</p>
     </li>
+    <li>
+      <p>中期评估</p>
+      <p>{{chartData.duringCount}}</p>
+    </li>
   </ul>
   <div id="reportChart"></div>
 </div>

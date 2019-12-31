@@ -18,11 +18,10 @@
       </li>
       <li>
         <select id="years">
-          <option value="0">2015</option>
-          <option value="0">2016</option>
-          <option value="0">2017</option>
-          <option value="0">2018</option>
-          <option value="0">2019</option>
+          <option value="0">十一五规划纲要</option>
+          <option value="1">十二五规划纲要</option>
+          <option value="2" selected>十三五规划纲要</option>
+          <option value="3">十四五规划纲要</option>
         </select>
       </li>
       <li>
@@ -195,7 +194,7 @@
         </li>
       </ul>
     </div>
-    <div class="documentWrap" v-if="isDocumentWrap" :style="{top:documentWrapTop + 'px',left:documentWrapLeft + 'px'}">
+    <div class="documentWrap" v-if="isDocumentWrap" :style="{top:documentWrapTop + 'px',left:documentWrapLeft - 550 + 'px'}">
       <div class="header">
         <span>{{DocumentWrapData.CITY_CODE}}</span>
         <span>指导思想<i class="el-icon-close" @click="DocumentWrapClose"></i></span>
@@ -217,14 +216,15 @@
     <!-- 我的收藏弹窗 -->
     <my-ecollect v-if="myEcollectVisible" @closeMyEcollect="myEcollectHide" :my-ecollect-visible="myEcollectVisible" :word-cloud-data="wordCouldData"></my-ecollect>
     <!-- 上位指导选择文档弹窗 -->
-    <choose-documet
-      @closeChooseDocumet="chooseDocumetHide"
-      :choose-documet-visible="chooseDocumetVisible"
-    ></choose-documet>
+    <guide-plan
+      @guidePlanClose="guidePlanClose"
+      :guide-plan-visible="guidePlanVisible"
+    ></guide-plan>
     <!-- 报告参考政府工作报告图表 -->
     <report-chart v-if="isReportChart" :chart-data="DocumentsType"></report-chart>
     <!-- 单文件分析 -->
     <single-document
+      v-if="singleDocumentVisible"
       @closeSingleDocument="closeSingleDocument"
       :single-document-visible="singleDocumentVisible"
       :word-cloud-data="wordCouldData"
@@ -258,7 +258,7 @@ import axios from 'axios'
 import mUtilsFn from '@/config/mUtils.js'
 import leftMenus from '@/components/leftMenus/leftMenus'
 import myEcollect from '@/components/myEcollect/myEcollect'
-import chooseDocumet from '@/components/chooseDocument/chooseDocument'
+import guidePlan from '@/components/guidePlan/guidePlan'
 import reportChart from '@/components/reportChart/reportChart'
 import singleDocument from '@/components/singleDocument/singleDocument'
 import uploadDocument from '@/components/uploadDocument/uploadDocument'
@@ -267,7 +267,7 @@ export default {
   components: {
     leftMenus,
     myEcollect,
-    chooseDocumet,
+    guidePlan,
     reportChart,
     singleDocument,
     uploadDocument,
@@ -275,6 +275,7 @@ export default {
   },
   data() {
     return {
+      tabActive:0,
       isDocumentWrap:false,// 地图弹窗是否显示
       documentWrapTop:null,// 地图弹窗左边位置
       documentWrapLeft:null,// 地图弹窗顶部位置
@@ -295,7 +296,7 @@ export default {
       wordCouldData: [], // 词云数据
       isReportChart: false, // 控制报告参考政府工作报告图表显隐
       myEcollectVisible: false, // 控制我的收藏显隐
-      chooseDocumetVisible: false, // 控制上位指导选择文档弹窗显隐
+      guidePlanVisible: false, // 控制上位指导选择文档弹窗显隐
       singleDocumentVisible: false, // 控制文件分析弹窗显隐
       uploadDocuVisible: false, // 控制文档上传弹窗显隐
       summaryVisible: false, // 控制摘要弹窗显隐
@@ -321,17 +322,6 @@ export default {
   },
 
   mounted() {
-    // let aaa = {
-    //   username: 'admin',
-    //   oginposition: 1,
-    //   password: 'zq1qaz@WSX',
-    //   veryCode: '123'
-    // }
-    // login().then(res => {
-    //   dept().then(res => {
-    //     console.log(res)
-    //   })
-    // })
     this.citySelect = document.getElementById('city')
     this.districtSelect = document.getElementById('district')
     this.echartsMap = this.$echarts.init(document.getElementById('mapChart'))
@@ -476,6 +466,9 @@ export default {
       }
     },
     search(area, aaa) {
+      if(this.tabActive === 1 && area === 'city'){
+        this.guidePlanVisible = true
+      }
       let obj = this.areaData[area]
       var option = null
       if (aaa) {
@@ -655,8 +648,8 @@ export default {
       this.myEcollectVisible = false
     },
     // 关闭选择文档弹窗
-    chooseDocumetHide() {
-      this.chooseDocumetVisible = false
+    guidePlanClose() {
+      this.guidePlanVisible = false
     },
     // 关闭文档分析弹窗
     closeSingleDocument() {
@@ -664,19 +657,19 @@ export default {
     },
     chooseDocumetClick(){
       this.singleDocumentVisible = true
-      this.chooseDocumetVisible = false
+      this.guidePlanVisible = false
       this.isReportChart = false
     },
     // 左侧tab个项点击事件
     menusClick(data) {
+      this.tabActive = data
       switch (data) {
         // case 0:
         //   this.singleDocumentVisible = true
-        //   this.chooseDocumetVisible = false
+        //   this.guidePlanVisible = false
         //   this.isReportChart = false
         //   break
         case 1:
-          this.chooseDocumetVisible = true
           this.isReportChart = false
           break
         case 2:
