@@ -252,7 +252,8 @@ import {
   saveSummaryInfo,
   login,
   getGuidingThought,
-  uploadDocu
+  uploadDocu,
+  saveContent
 } from '../../api/api'
 import axios from 'axios'
 import mUtilsFn from '@/config/mUtils.js'
@@ -577,12 +578,14 @@ export default {
     },
     // 保存摘要并关闭弹窗
     submitSummaryInfo() {
-      saveSummaryInfo().then(res => {
-        this.summaryVisible = false
+      saveContent({title:'测试标题',content:'测试正文'}).then(res => {
         this.$message({
           message: res.message,
-          type: res.code == 0 ? 'success' : 'error'
+          type: res.code === '0' ? 'success' : 'error'
         })
+        if(res.code === '0'){
+          this.summaryVisible = false
+        }       
       })
     },
     // 打开文档上传弹窗

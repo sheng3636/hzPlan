@@ -32,6 +32,10 @@ export const getDocuInfo = (json) => fetch('http://192.168.14.63:8083/programme/
  */
 export const uploadDocu = (json) => post('http://192.168.14.63:8083/programme/word/saveStructure', json)
 /**
+ * 保存摘要
+ */
+export const saveContent = (json) => post('http://192.168.14.63:8083/programme/word/save_content', json)
+/**
  * 登录获取token
  */
 export const login = (json) => post('/imp/system/system_spring_security?username=admin&loginposition=1&password=zq1qaz@WSX&veryCode=123', json)
