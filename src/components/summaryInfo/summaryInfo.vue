@@ -40,7 +40,7 @@ export default {
   },
   watch:{
     summaryVal: function (val, oldVal) {
-      console.log('new' + val, 'oldVal' + oldVal)
+      // console.log('new' + val, 'oldVal' + oldVal)
       this.formSummary.summaryTxt = val
     }
   },
@@ -57,7 +57,7 @@ export default {
     onSubmit(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log('submit!')
+          // console.log('submit!')
           this.$emit('submitSummaryInfo')
         } else {
           return false

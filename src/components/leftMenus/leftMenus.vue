@@ -1,7 +1,7 @@
 <template>
   <ul class="mainLeft">
     <li>
-      <h3 class="titleRow" :class="{'active':leftShow}" @click="leftShow = true">
+      <h3 class="titleRow" :class="{'active':leftShow}" @click="tabClick(0)">
         <i class="iconfont iconchuzhisilu"></i>基本思路分析
       </h3>
       <ul class="listMain" v-if="leftShow">
@@ -12,12 +12,12 @@
       </ul>
     </li>
     <li>
-      <h3 class="titleRow" :class="{'active':!leftShow}" @click="leftShow = false">
+      <h3 class="titleRow" :class="{'active':!leftShow}" @click="tabClick(1)">
         <i class="iconfont iconmubiao"></i>发展目标分析
       </h3>
-      <div class="listMain" v-if="!leftShow">
+      <!-- <div class="listMain" v-if="!leftShow"> -->
         <!-- <el-tree :data="treeMuneData" :props="defaultProps" @node-click="handleNodeClick"></el-tree> -->
-      </div>
+      <!-- </div> -->
     </li>
   </ul>
 </template>
@@ -31,6 +31,14 @@ export default {
     }
   },
   methods: {
+    tabClick(flag){
+      if(flag === 0) {
+        this.leftShow = true
+      } else {
+        this.leftShow = false
+        window.location.href="http://139.196.226.113/ditu/?id=1"
+      }
+    },
     // 点击左侧tab向父组件传递节点信息
     whichMenu(data) {
       this.$emit('menusClick', data)

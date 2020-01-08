@@ -60,7 +60,7 @@ export default {
           {
             type: 'wordCloud',
             gridSize: 10, // 用来调整词之间的距离
-            sizeRange: [14, 25], // 用来调整字的大小范围
+            sizeRange: [14, 50], // 用来调整字的大小范围
             rotationRange: [0, 30],
             textStyle: {
               // 随机生成字体颜色

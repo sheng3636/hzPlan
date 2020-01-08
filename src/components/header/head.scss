@@ -15,8 +15,8 @@
     align-items: center;
     @include wh(1300px, 65px);
     @include fj(space-around);
-
-    .router-link-active {
+    font-weight: bold;
+    .aaa {
       color: #eddd12;
     }
   }

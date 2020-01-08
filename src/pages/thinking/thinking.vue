@@ -176,13 +176,13 @@
                 <div class="searchResultWrap scroll">
                   <div class="resultItem">
                     <h3 class="resultTitle">
-                      浙江省十三五规划纲要
+                      2018政府工作报告
                       <i class="iconfont iconduibi" @click="chooseDocumetClick"></i>
                     </h3>
                     <p
                       class="resultTxt"
                       :style="{'height':heightAuto}"
-                    >“十三五”时期经济社会发展的指导思想是：高举中国特色 社会主义伟大旗帜，以马克思列宁主义、毛泽东思想、邓小平理 论、“三个代表”重要思想、科学发展观为指导，深入贯彻习近平 总书记系列重要讲话精神，以“四个全面”战略布局为统领，以 创新、协调、绿色、开放、共享五大发展理念为引领，以“八八 战略”为总纲，以“干在实处永无止境，走在前列要谋新篇”为 新使命，以“更进一步、更快一步，继续发挥先行和示范作用” 为总要求，紧紧围绕“一都三城”战略目标，</p>
+                    >2017年是本届政府任期的第一年。市政府认真贯彻落实省委省政府和市委的决策部署，坚定不移沿着“八八战略”指引的路子走下去，围绕建设独具魅力的“山海水城、和合圣地、制造之都”目标，拉高标杆、争先进位，勇当排头兵、再创新辉煌，奋力推进“三大历史任务”，圆满完成了市五届人大一次会议确定的目标任务，办成了一些多年想办而没有办成的大事，解决了一些长期想解决而没有解决的难题，取得了新世纪以来最好的成绩单，多项主要指标增速全省领先，生产总值增长8.1%，财政总收入增长 12.5%，一般公共预算收入增长 11.1%，城乡居民人均可支配收入分别增长 8.9%和 9.5%。台州正朝着高水平全面建成小康社会胜利前进。 这一年，我们着力深化供给侧结构性改革，产业转型升级迈出新步伐。积极实施先进制造业“十大行动”，制造之都建设扎实推进。规上工业增加值增长11.6%，居全省第一。发力高端制造，天鹰无人机成功下线，航空特色小镇建设进展顺利，机器人产业快速发展。吉利汽车临海产业园提前形成 20 万辆产能，领克 01在路桥基地量产销售，全产业链汽车城建设加快推进。重大产业 项目势头喜人，华海制药科技产业园破土动工，华强方特主题公 园顺利签约。加大倒逼转型力度，推进“亩均论英雄”。新增制造 业单项冠军示范企业3家。滚动实施小微企业三年成长计划，新 增小微企业 2.6 万家，“个转企”3435 家，建成小微企业园 109 个，入驻企业 4612 家。推进“两化”融合，新增上云企业 7800 家。深化“三强一制造”建设，启动全国首个智能马桶质量攻坚 行动计划，新增国家级产品质量提升示范区3个、“浙江制造”标 准17项，新增“浙江制造”认证企业数居全省第一。天台成为全 国质量强市示范城市创建城市。温岭列入全省首批军民融合创新 示范区创建名单。实施“128”股改上市三年行动计划，出台股改 新政和上市新政双 10 条，新增股份制企业 600 家、上市企业 11 家，上市企业总数 52 家，其中 A 股上市企业数居全国地级市第 四。实施“瞪羚企业”培育计划，首批入选企业33家。加大惠企 力度，减免各类税费122亿元。成立台州民营经济学院，突出创 二代培训，推动“薪火相传”。推动金融、物流、电商、文化等产 业发展，加快建设省级现代服务业集聚示范区，中国模具博览城 投用。积极推进旅游强市建设，柔川、南屏景区被评为 4A 级景 区，桃渚景区列入国家级风景名胜区。现代农业“两区”建设成 效明显，建成粮食生产功能区7.3万亩、省级现代农业园区2个， 全国农业标准化示范区达13个，获省农博会金奖农产品数连续十 五年居全省第一，获国字号渔业品牌6个，成为全省唯一省级农 机博览会举办地。率先出台绿色食品质量安全责任保险政策，有 效构建四级联动的农产品质量安全监管体系。成功创建国家新型 职业农民培训示范基地。</p>
                     <span class="resultUnfold" @click="unfoldClick">{{unfold === 0 ? '展开' : '收起'}}</span>
                     <p class="dateRow">2019/12/21 12:21:12</p>
                   </div>
@@ -218,6 +218,7 @@
     <!-- 上位指导选择文档弹窗 -->
     <guide-plan
       @guidePlanClose="guidePlanClose"
+      @fatherMethod="selectText"
       :guide-plan-visible="guidePlanVisible"
     ></guide-plan>
     <!-- 报告参考政府工作报告图表 -->
@@ -226,6 +227,7 @@
     <single-document
       v-if="singleDocumentVisible"
       @closeSingleDocument="closeSingleDocument"
+      :single-document-title="singleDocumentTitle"
       :single-document-visible="singleDocumentVisible"
       :word-cloud-data="wordCouldData"
     ></single-document>
@@ -276,6 +278,7 @@ export default {
   },
   data() {
     return {
+      singleDocumentTitle:'2018政府工作报告',
       tabActive:0,
       isDocumentWrap:false,// 地图弹窗是否显示
       documentWrapTop:null,// 地图弹窗左边位置
@@ -350,6 +353,8 @@ export default {
   methods: {
     // 选中文字后显示菜单按钮组
     selectText(e) {
+      console.log(e);
+      
       if (document.Selection) {
         //ie浏览器
         this.selectTxt = document.selection.createRange().text
@@ -357,7 +362,7 @@ export default {
         //标准浏览器
         this.selectTxt = window.getSelection().toString()
       }
-      if (this.selectTxt !== '') {
+      if (this.selectTxt != '') {
         this.isMenu = true
         this.menuTop = e.clientY - 65
         this.menuLeft = e.clientX
@@ -517,23 +522,14 @@ export default {
         //     return tipHtml
         //   }
         // },
-        visualMap: {
-          show: false,
-          inRange: {
-            color: [
-              '#5cd2c3',
-              '#2c9a42',
-              '#d08a00',
-              '#07ceed',
-              '#c23c33',
-              '#0081ff',
-              '#5dc6df',
-              '#6d7de3',
-              '#2bbc90',
-              '#eddd12'
-            ]
-          }
-        },
+        // visualMap: {
+        //   show: false,
+        //   inRange: {
+        //     color: [
+        //       'transparent'
+        //     ]
+        //   }
+        // },
         series: [
           {
             name: '数据名称',
@@ -544,10 +540,9 @@ export default {
             showLegendSymbol: false, // 在图例相应区域显示图例的颜色标识（系列标识的小圆点），存在 legend 组件时生效。
             itemStyle: {
               normal: {
-                color: '#ccc',
-                areaColor: '#fff',
-                borderColor: '#fff',
-                borderWidth: 0.5,
+                areaColor: 'rgba(16,72,133)',
+                borderColor: 'rgba(51, 136, 255)',
+                borderWidth: 2,
                 label: {
                   show: true,
                   textStyle: {
@@ -557,10 +552,10 @@ export default {
               },
               emphasis: {
                 //鼠标经过区域样式
-                areaColor: false,
-                borderColor: '#fff',
+                areaColor: 'rgba(11,55,98)',
+                borderColor: 'rgba(11,234,235)',
                 areaStyle: {
-                  color: '#fff'
+                  color: 'rgba(11,55,98)'
                 },
                 label: {
                   show: true,
