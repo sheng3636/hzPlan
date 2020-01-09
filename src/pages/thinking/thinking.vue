@@ -257,8 +257,10 @@ import {
   login,
   getGuidingThought,
   uploadDocu,
-  saveContent
 } from '../../api/api'
+import {
+  saveContent
+} from '@/api/thinkingApi'
 import axios from 'axios'
 import mUtilsFn from '@/config/mUtils.js'
 import leftMenus from '@/components/leftMenus/leftMenus'

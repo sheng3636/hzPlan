@@ -48,13 +48,16 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'Login',
   data() {
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username:"admin",
+        loginposition:"1",
+        password:"zq1qaz@WSX",
+        veryCode:"123"
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur'}],
@@ -74,6 +77,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['login']),
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -88,11 +92,13 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path:  this.redirect || '/thinking' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
+          this.login(this.loginForm)
+            .then(res => {
+              this.$router.push({ path:  this.redirect || '/thinking' })
+              this.loading = false
+            })
+            .catch(err => {
+              this.loading = false
           })
         } else {
           console.log('error submit!!')

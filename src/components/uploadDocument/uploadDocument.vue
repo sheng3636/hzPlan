@@ -54,6 +54,9 @@
 import {
   getDocuInfo
 } from '../../api/api'
+// import {
+//   getDocuInfo
+// } from '@/api/thinkingApi'
 export default {
   name: 'uploadDocument',
   data(){

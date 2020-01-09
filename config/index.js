@@ -24,13 +24,13 @@ module.exports = {
       //     '^/baidu': '' //重写接口
       //   }
       // },
-      // '/imp': {
-      //   target: 'http://192.168.14.63:8083', //前端接口
-      //   changeOrigin: true, //允许跨域
-      //   pathRewrite: {
-      //     '^/imp': '' //重写接口
-      //   }
-      // }
+      '/imp': {
+        target: 'http://192.168.0.117:8083/', //前端接口
+        changeOrigin: true, //允许跨域
+        pathRewrite: {
+          '^/imp': '' //重写接口
+        }
+      }
     },
 
     // Various Dev Server settings

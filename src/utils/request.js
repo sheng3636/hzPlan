@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
-import store from '@/store'
+import store from '@/store/store'
 import { getToken } from '@/utils/auth'
 
 // 创建一个axios实例
 const service = axios.create({
-  baseURL: 'https://www.fastmock.site/mock/1f3a07523606cd78e586a1780f46c328/hzPlan/', // url = base url + request url
+  baseURL: '/imp', // url = base url + request url
   withCredentials: false, // 表示跨域请求时是否需要使用凭证，默认为false
   timeout: 8000 // 如果请求超过 `timeout` 的时间，请求将被中断
 })
@@ -13,13 +13,10 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   config => {
-    // 发送请求之前做些什么
-
-    if (store.getters.token) {
+    if (store.state.token) {
       // 让每个请求都带上token
-      // ['authorized'] 是一个自定义的头标识
-      // 请根据实际情况修改它
-      config.headers['authorized'] = getToken()
+      // ['authorized'] 是一个自定义的头标识,请根据实际情况修改它
+      config.headers['Authorization'] = getToken()
     }
     return config
   },
@@ -46,7 +43,7 @@ service.interceptors.response.use(
     const res = response.data
 
     // 如果自定义代码不是0,它是判断一个错误。
-    if (res.code !== 0) {
+    if (res.code !== '0') {
       Message({
         message: res.message || 'Error',
         type: 'error',

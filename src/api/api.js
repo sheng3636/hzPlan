@@ -26,7 +26,7 @@ export const getGuidingThought = (json) => post('https://www.fastmock.site/mock/
 /**
  * 获取文档上传下拉框数据
  */
-export const getDocuInfo = (json) => fetch('http://192.168.0.117:8083/programme/word/findByBusesice', {})
+export const getDocuInfo = (json) => fetch('/imp/programme/word/findByBusesice', {})
 /**
  * 提交上传文档
  */
@@ -35,15 +35,3 @@ export const uploadDocu = (json) => post('http://192.168.0.117:8083/programme/wo
  * 保存摘要
  */
 export const saveContent = (json) => post('http://192.168.0.117:8083/programme/word/save_content', json)
-/**
- * 登录获取token
- */
-export const login = (json) => post('/imp/system/system_spring_security?username=admin&loginposition=1&password=zq1qaz@WSX&veryCode=123', json)
-/**
- * 获取EHS天气情况
- */
-export const weatherInfo = (json) => fetch('/baidu/telematics/v3/weather', {
-  location: '南充',
-  output: 'json',
-  ak: 'PtZ7r5x7fS0jz2If5Ecxbu4abFQBpvXF'
-})

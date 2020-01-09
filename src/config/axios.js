@@ -1,7 +1,17 @@
 import axios from 'axios'
+import store from '@/store/store'
+import {
+  getToken
+} from '@/utils/auth'
 
 // 请求拦截器
 axios.interceptors.request.use(config => {
+  if (store.state.token) {
+    // 让每个请求都带上token
+    // ['authorized'] 是一个自定义的头标识
+    // 请根据实际情况修改它
+    config.headers['Authorization'] = getToken()
+  }
   return config
 }, error => {
   return Promise.reject(error)
