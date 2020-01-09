@@ -26,15 +26,15 @@ export const getGuidingThought = (json) => post('https://www.fastmock.site/mock/
 /**
  * 获取文档上传下拉框数据
  */
-export const getDocuInfo = (json) => fetch('http://192.168.14.63:8083/programme/word/findByBusesice', {})
+export const getDocuInfo = (json) => fetch('http://192.168.0.117:8083/programme/word/findByBusesice', {})
 /**
  * 提交上传文档
  */
-export const uploadDocu = (json) => post('http://192.168.14.63:8083/programme/word/saveStructure', json)
+export const uploadDocu = (json) => post('http://192.168.0.117:8083/programme/word/saveStructure', json)
 /**
  * 保存摘要
  */
-export const saveContent = (json) => post('http://192.168.14.63:8083/programme/word/save_content', json)
+export const saveContent = (json) => post('http://192.168.0.117:8083/programme/word/save_content', json)
 /**
  * 登录获取token
  */

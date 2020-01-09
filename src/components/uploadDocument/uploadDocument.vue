@@ -17,7 +17,7 @@
         :on-exceed="handleExceed"
         :before-upload="beforeDocuUpload"
         :on-success="handleDocuSuccess"
-        action="http://192.168.14.63:8083/programme/word/singlefile"
+        action="http://192.168.0.117:8083/programme/word/singlefile"
       >
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">
