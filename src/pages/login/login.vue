@@ -94,7 +94,7 @@ export default {
           this.loading = true
           this.login(this.loginForm)
             .then(res => {
-              this.$router.push({ path:  this.redirect || '/thinking' })
+              this.$router.push({ path:  this.redirect || '/' })
               this.loading = false
             })
             .catch(err => {

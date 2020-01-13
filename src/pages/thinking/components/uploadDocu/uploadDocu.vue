@@ -52,11 +52,9 @@
 </template>
 <script>
 import {
-  getDocuInfo
-} from '../../api/api'
-// import {
-//   getDocuInfo
-// } from '@/api/thinkingApi'
+  getDocuInfo,
+  uploadDocu
+} from '@/api/thinkingApi'
 export default {
   name: 'uploadDocument',
   data(){
@@ -105,22 +103,6 @@ export default {
         this.fileYearOpts = res.data.fileYearOpts        
       })
     },
-    // 文件上传成功
-    handleDocuSuccess(res, file) {
-      if(res.code !== '0'){
-        this.$message({
-          message: '文件上传失败',
-          type: 'error'
-        })
-        this.$refs.upload.clearFiles()
-      } else {
-        this.formUpload.folder_no =  res.Folderno
-      }
-    },
-    // 文件超出个数限制时的钩子
-    handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-    },
     // 上传文件之前的钩子
     beforeDocuUpload(file) {
       let fileName = file.name
@@ -139,6 +121,22 @@ export default {
       }
       return isLt
     },
+    // 文件选择时上传成功
+    handleDocuSuccess(res, file) {
+      if(res.code !== '0'){
+        this.$message({
+          message: '文件上传失败',
+          type: 'error'
+        })
+        this.$refs.upload.clearFiles()
+      } else {
+        this.formUpload.folder_no =  res.Folderno
+      }
+    },
+    // 文件超出个数限制时的钩子
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
     // 关闭文档上传弹窗并清空表单
     uploadDocuHide(formName) {
       this.$refs[formName].resetFields()
@@ -146,7 +144,7 @@ export default {
       this.formUpload.folder_no =  ''
       this.$emit('closeUploadDocu')
     },
-    // 提交上传表单
+    // 提交上传表单并清空表单
     onSubmit(formName,formData) {
       if (this.formUpload.folder_no ==  '') {
         this.$message({
@@ -157,7 +155,16 @@ export default {
       }
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$emit('submitUploadDocu',formData)
+          uploadDocu(formData).then(res => {
+            this.$message({
+              message: res.message,
+              type: res.code === '0' ? 'success' : 'error'
+            })
+            this.$refs[formName].resetFields()
+            this.$refs.upload.clearFiles()
+            this.formUpload.folder_no =  ''
+            this.$emit('submitUploadDocu')
+          })
         } else {
           return false
         }
@@ -167,5 +174,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import './uploadDocument.scss';
+@import './uploadDocu.scss';
 </style>

@@ -8,10 +8,6 @@ const Thinking = r => require.ensure([], () => r(require('@/pages/thinking/think
 export default new Router({
   mode: 'hash',
   routes: [
-    {
-      path: '/',
-      redirect: '/login'
-    }, 
     { // 登录
       path: '/login',
       name: '登录',
@@ -20,14 +16,13 @@ export default new Router({
     {
       path: '/',
       component: Layout,
-      // redirect: '/thinking',
+      redirect: '/thinking',
       children: [{
         path: 'thinking',
-        name: '目标思路地图',
+        name: 'thinking',
         component: Thinking,
         meta: {
-          title: '目标思路地图',
-          icon: 'iconxiangmu'
+          title: '目标思路地图'
         }
       }]
     }

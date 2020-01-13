@@ -14,16 +14,42 @@ Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 
-const whiteList = ['/login'] // no redirect whitelist
-// router.beforeEach((to, from, next) => {
-//   // 页面标题
-//   if (!to.meta.title) {
-//     document.title = "浙江省发展规划院"
-//   } else {
-//     document.title = to.meta.title
-//   }
-  
-// })
+router.beforeEach((to, from, next) => {
+  // 页面标题
+  if (!to.meta.title) {
+    document.title = "浙江省发展规划院"
+  } else {
+    document.title = to.meta.title
+  }
+
+  if (to.matched.length === 0) { // 如果未匹配到路由
+    from.path ? next({
+      path: from.path
+    }) : next('/'); // 如果上级也未匹配到路由则跳转主页面，如果上级能匹配到则转上级路由
+  } else {
+    next() // 如果匹配到正确跳转
+  }
+  const whiteList = ['/login'] // no redirect whitelist
+  const hasToken = getToken() // determine whether the user has logged in
+  if (hasToken) {
+    if (to.path === '/login') {
+      // if is logged in, redirect to the home page
+      next({
+        path: '/'
+      })
+    }
+  } else {
+    /* has no token*/
+
+    if (whiteList.indexOf(to.path) !== -1) {
+      // in the free login whitelist, go directly
+      next()
+    } else {
+      // other pages that do not have permission to access are redirected to the login page.
+      next(`/login?redirect=${to.path}`)
+    }
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

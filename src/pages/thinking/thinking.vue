@@ -233,11 +233,11 @@
         :word-cloud-data="wordCouldData"
       ></single-document>
       <!-- 文档上传 -->
-      <upload-document
+      <upload-docu
         @closeUploadDocu="closeUploadDocu"
         @submitUploadDocu="submitUploadDocu"
         :upload-docu-visible="uploadDocuVisible"
-      ></upload-document>
+      ></upload-docu>
       <!-- 添加摘要 -->
       <summary-info
         @closeSummaryInfo="closeSummaryInfo"
@@ -256,20 +256,16 @@ import {
   saveSummaryInfo,
   login,
   getGuidingThought,
-  uploadDocu,
 } from '../../api/api'
-import {
-  saveContent
-} from '@/api/thinkingApi'
 import axios from 'axios'
 import mUtilsFn from '@/config/mUtils.js'
-import leftMenus from '@/components/leftMenus/leftMenus'
+import leftMenus from './components/leftMenus/leftMenus'
 import myEcollect from '@/components/myEcollect/myEcollect'
 import guidePlan from '@/components/guidePlan/guidePlan'
 import reportChart from '@/components/reportChart/reportChart'
 import singleDocument from '@/components/singleDocument/singleDocument'
-import uploadDocument from '@/components/uploadDocument/uploadDocument'
-import summaryInfo from '@/components/summaryInfo/summaryInfo'
+import uploadDocu from './components/uploadDocu/uploadDocu'
+import summaryInfo from './components/summaryInfo/summaryInfo'
 export default {
   components: {
     leftMenus,
@@ -277,13 +273,13 @@ export default {
     guidePlan,
     reportChart,
     singleDocument,
-    uploadDocument,
+    uploadDocu,
     summaryInfo
   },
   data() {
     return {
       singleDocumentTitle:'2018政府工作报告',
-      tabActive:0,
+      leftTabActive:0,
       isDocumentWrap:false,// 地图弹窗是否显示
       documentWrapTop:null,// 地图弹窗左边位置
       documentWrapLeft:null,// 地图弹窗顶部位置
@@ -476,7 +472,7 @@ export default {
       }
     },
     search(area, aaa) {
-      if(this.tabActive === 1 && area === 'city'){
+      if(this.leftTabActive === 1 && area === 'city'){
         this.guidePlanVisible = true
       }
       let obj = this.areaData[area]
@@ -577,15 +573,7 @@ export default {
     },
     // 保存摘要并关闭弹窗
     submitSummaryInfo() {
-      saveContent({title:'测试标题',content:'测试正文'}).then(res => {
-        this.$message({
-          message: res.message,
-          type: res.code === '0' ? 'success' : 'error'
-        })
-        if(res.code === '0'){
-          this.summaryVisible = false
-        }       
-      })
+      this.summaryVisible = false
     },
     // 打开文档上传弹窗
     openUploadDocument() {
@@ -596,14 +584,8 @@ export default {
       this.uploadDocuVisible = false
     },
     // 提交上传文档表单
-    submitUploadDocu(formData) {
-      uploadDocu(formData).then(res => {
-        this.uploadDocuVisible = false
-        this.$message({
-          message: res.message,
-          type: res.code === '0' ? 'success' : 'error'
-        })
-      })
+    submitUploadDocu() {
+      this.uploadDocuVisible = false
     },
     // 获取文档分析词云数据
     getCiYunFn() {
@@ -664,7 +646,7 @@ export default {
     },
     // 左侧tab个项点击事件
     menusClick(data) {
-      this.tabActive = data
+      this.leftTabActive = data
       switch (data) {
         // case 0:
         //   this.singleDocumentVisible = true
