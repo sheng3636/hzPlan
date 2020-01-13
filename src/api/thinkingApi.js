@@ -22,3 +22,11 @@ export function uploadDocu(data) {
     data
   })
 }
+// 根据城市编码获取该城市五年规划纲要的指导思想
+export function getStructure(params) {
+  return request({
+    url: '/programme/word/findStructure',
+    method: 'get',
+    params
+  })
+}

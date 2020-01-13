@@ -18,12 +18,14 @@
           <select id="district" @change="search('district')"></select>
         </li>
         <li>
-          <select id="years">
-            <option value="0">十一五规划纲要</option>
-            <option value="1">十二五规划纲要</option>
-            <option value="2" selected>十三五规划纲要</option>
-            <option value="3">十四五规划纲要</option>
-          </select>
+          <el-select v-model="structureParams.file_year" placeholder="请选择">
+            <el-option
+              v-for="item in structureYears"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </li>
         <li>
           <el-button size="mini" @click="saveAsImage">导出地图</el-button>
@@ -40,18 +42,45 @@
             <h3 class="titleRow" :class="{'active':rightHistoryTab}" @click="historyTabClick">结构分析</h3>
             <div class="listMain constractArea" v-if="rightHistoryTab">
               <div class="tagWrap">
-                <span class="tagItem" :class="{'active':DocumentWrapData.LIFT_FLAG && DocumentWrapData.LIFT_FLAG !== '空缺'}">举起旗帜</span>
-                <span class="tagItem" :class="{'active':DocumentWrapData.FORMULATE_STRATEGY && DocumentWrapData.FORMULATE_STRATEGY !== '空缺'}">拟定战略</span>
-                <span class="tagItem" :class="{'active':DocumentWrapData.DEFINITE_REQUIREMENT && DocumentWrapData.DEFINITE_REQUIREMENT !== '空缺'}">明确要求</span>
-                <span class="tagItem" :class="{'active':DocumentWrapData.DESIGN_PATH && DocumentWrapData.DESIGN_PATH !== '空缺'}">设计路径</span>
-                <span class="tagItem" :class="{'active':DocumentWrapData.FORWARD_TASK && DocumentWrapData.FORWARD_TASK !== '空缺'}">提出任务</span>
-                <span class="tagItem" :class="{'active':DocumentWrapData.PROPOSE_MEASURE && DocumentWrapData.PROPOSE_MEASURE !== '空缺'}">提出措施</span>
-                <span class="tagItem" :class="{'active':DocumentWrapData.DESCRIBE_TARGET && DocumentWrapData.DESCRIBE_TARGET !== '空缺'}">描绘目标</span>
-                <span class="tagItem" :class="{'active':DocumentWrapData.SIGNIFICANCE && DocumentWrapData.SIGNIFICANCE !== '空缺'}">指出意义</span>
+                <span
+                  class="tagItem"
+                  :class="{'active':DocumentWrapData.LIFT_FLAG && DocumentWrapData.LIFT_FLAG !== '空缺'}"
+                >举起旗帜</span>
+                <span
+                  class="tagItem"
+                  :class="{'active':DocumentWrapData.FORMULATE_STRATEGY && DocumentWrapData.FORMULATE_STRATEGY !== '空缺'}"
+                >拟定战略</span>
+                <span
+                  class="tagItem"
+                  :class="{'active':DocumentWrapData.DEFINITE_REQUIREMENT && DocumentWrapData.DEFINITE_REQUIREMENT !== '空缺'}"
+                >明确要求</span>
+                <span
+                  class="tagItem"
+                  :class="{'active':DocumentWrapData.DESIGN_PATH && DocumentWrapData.DESIGN_PATH !== '空缺'}"
+                >设计路径</span>
+                <span
+                  class="tagItem"
+                  :class="{'active':DocumentWrapData.FORWARD_TASK && DocumentWrapData.FORWARD_TASK !== '空缺'}"
+                >提出任务</span>
+                <span
+                  class="tagItem"
+                  :class="{'active':DocumentWrapData.PROPOSE_MEASURE && DocumentWrapData.PROPOSE_MEASURE !== '空缺'}"
+                >提出措施</span>
+                <span
+                  class="tagItem"
+                  :class="{'active':DocumentWrapData.DESCRIBE_TARGET && DocumentWrapData.DESCRIBE_TARGET !== '空缺'}"
+                >描绘目标</span>
+                <span
+                  class="tagItem"
+                  :class="{'active':DocumentWrapData.SIGNIFICANCE && DocumentWrapData.SIGNIFICANCE !== '空缺'}"
+                >指出意义</span>
               </div>
               <p class="blueLine"></p>
               <div class="constructWrap scroll">
-                <div class="constructItem1" :class="{'constructItem':DocumentWrapData.LIFT_FLAG && DocumentWrapData.LIFT_FLAG !== '空缺'}">
+                <div
+                  class="constructItem1"
+                  :class="{'constructItem':DocumentWrapData.LIFT_FLAG && DocumentWrapData.LIFT_FLAG !== '空缺'}"
+                >
                   <p class="constructTitle">
                     <span>举起旗帜</span>
                     <span class="contructionTool">
@@ -59,29 +88,50 @@
                       <i class="el-icon-edit" @click="Excerptlick(DocumentWrapData.LIFT_FLAG)"></i>
                     </span>
                   </p>
-                  <p class="abstract">{{DocumentWrapData.LIFT_FLAG ? DocumentWrapData.LIFT_FLAG : '空缺'}}</p>
+                  <p
+                    class="abstract"
+                  >{{DocumentWrapData.LIFT_FLAG ? DocumentWrapData.LIFT_FLAG : '空缺'}}</p>
                 </div>
-                <div class="constructItem1" :class="{'constructItem':DocumentWrapData.FORMULATE_STRATEGY && DocumentWrapData.FORMULATE_STRATEGY !== '空缺'}">
+                <div
+                  class="constructItem1"
+                  :class="{'constructItem':DocumentWrapData.FORMULATE_STRATEGY && DocumentWrapData.FORMULATE_STRATEGY !== '空缺'}"
+                >
                   <p class="constructTitle">
                     <span>拟定战略</span>
                     <span class="contructionTool">
                       <i class="el-icon-star-off" @click="collectStatusFn"></i>
-                      <i class="el-icon-edit" @click="Excerptlick(DocumentWrapData.FORMULATE_STRATEGY)"></i>
+                      <i
+                        class="el-icon-edit"
+                        @click="Excerptlick(DocumentWrapData.FORMULATE_STRATEGY)"
+                      ></i>
                     </span>
                   </p>
-                  <p class="abstract">{{DocumentWrapData.FORMULATE_STRATEGY ? DocumentWrapData.FORMULATE_STRATEGY : '空缺'}}</p>
+                  <p
+                    class="abstract"
+                  >{{DocumentWrapData.FORMULATE_STRATEGY ? DocumentWrapData.FORMULATE_STRATEGY : '空缺'}}</p>
                 </div>
-                <div class="constructItem1" :class="{'constructItem':DocumentWrapData.DEFINITE_REQUIREMENT && DocumentWrapData.DEFINITE_REQUIREMENT !== '空缺'}">
+                <div
+                  class="constructItem1"
+                  :class="{'constructItem':DocumentWrapData.DEFINITE_REQUIREMENT && DocumentWrapData.DEFINITE_REQUIREMENT !== '空缺'}"
+                >
                   <p class="constructTitle">
                     <span>明确要求</span>
                     <span class="contructionTool">
                       <i class="el-icon-star-off" @click="collectStatusFn"></i>
-                      <i class="el-icon-edit" @click="Excerptlick(DocumentWrapData.DEFINITE_REQUIREMENT)"></i>
+                      <i
+                        class="el-icon-edit"
+                        @click="Excerptlick(DocumentWrapData.DEFINITE_REQUIREMENT)"
+                      ></i>
                     </span>
                   </p>
-                  <p class="abstract">{{DocumentWrapData.DEFINITE_REQUIREMENT ? DocumentWrapData.DEFINITE_REQUIREMENT : '空缺'}}</p>
+                  <p
+                    class="abstract"
+                  >{{DocumentWrapData.DEFINITE_REQUIREMENT ? DocumentWrapData.DEFINITE_REQUIREMENT : '空缺'}}</p>
                 </div>
-                <div class="constructItem1" :class="{'constructItem':DocumentWrapData.DESIGN_PATH && DocumentWrapData.DESIGN_PATH !== '空缺'}">
+                <div
+                  class="constructItem1"
+                  :class="{'constructItem':DocumentWrapData.DESIGN_PATH && DocumentWrapData.DESIGN_PATH !== '空缺'}"
+                >
                   <p class="constructTitle">
                     <span>设计路径</span>
                     <span class="contructionTool">
@@ -89,45 +139,75 @@
                       <i class="el-icon-edit" @click="Excerptlick(DocumentWrapData.DESIGN_PATH)"></i>
                     </span>
                   </p>
-                  <p class="abstract">{{DocumentWrapData.DESIGN_PATH ? DocumentWrapData.DESIGN_PATH : '空缺'}}</p>
+                  <p
+                    class="abstract"
+                  >{{DocumentWrapData.DESIGN_PATH ? DocumentWrapData.DESIGN_PATH : '空缺'}}</p>
                 </div>
-                <div class="constructItem1" :class="{'constructItem':DocumentWrapData.FORWARD_TASK && DocumentWrapData.FORWARD_TASK !== '空缺'}">
+                <div
+                  class="constructItem1"
+                  :class="{'constructItem':DocumentWrapData.FORWARD_TASK && DocumentWrapData.FORWARD_TASK !== '空缺'}"
+                >
                   <p class="constructTitle">
                     <span>提出任务</span>
                     <span class="contructionTool">
                       <i class="el-icon-star-off" @click="collectStatusFn"></i>
                       <i class="el-icon-edit" @click="Excerptlick(DocumentWrapData.FORWARD_TASK)"></i>
-                    </span></p>
-                  <p class="abstract">{{DocumentWrapData.FORWARD_TASK ? DocumentWrapData.FORWARD_TASK : '空缺'}}</p>
+                    </span>
+                  </p>
+                  <p
+                    class="abstract"
+                  >{{DocumentWrapData.FORWARD_TASK ? DocumentWrapData.FORWARD_TASK : '空缺'}}</p>
                 </div>
-                <div class="constructItem1" :class="{'constructItem':DocumentWrapData.PROPOSE_MEASURE && DocumentWrapData.PROPOSE_MEASURE !== '空缺'}">
+                <div
+                  class="constructItem1"
+                  :class="{'constructItem':DocumentWrapData.PROPOSE_MEASURE && DocumentWrapData.PROPOSE_MEASURE !== '空缺'}"
+                >
                   <p class="constructTitle">
                     <span>提出措施</span>
                     <span class="contructionTool">
                       <i class="el-icon-star-off" @click="collectStatusFn"></i>
-                      <i class="el-icon-edit" @click="Excerptlick(DocumentWrapData.PROPOSE_MEASURE)"></i>
-                    </span></p>
-                  <p class="abstract">{{DocumentWrapData.PROPOSE_MEASURE ? DocumentWrapData.PROPOSE_MEASURE : '空缺'}}</p>
+                      <i
+                        class="el-icon-edit"
+                        @click="Excerptlick(DocumentWrapData.PROPOSE_MEASURE)"
+                      ></i>
+                    </span>
+                  </p>
+                  <p
+                    class="abstract"
+                  >{{DocumentWrapData.PROPOSE_MEASURE ? DocumentWrapData.PROPOSE_MEASURE : '空缺'}}</p>
                 </div>
-                <div class="constructItem1" :class="{'constructItem':DocumentWrapData.DESCRIBE_TARGET && DocumentWrapData.DESCRIBE_TARGET !== '空缺'}">
+                <div
+                  class="constructItem1"
+                  :class="{'constructItem':DocumentWrapData.DESCRIBE_TARGET && DocumentWrapData.DESCRIBE_TARGET !== '空缺'}"
+                >
                   <p class="constructTitle">
-                    
                     <span>描绘目标</span>
                     <span class="contructionTool">
                       <i class="el-icon-star-off" @click="collectStatusFn"></i>
-                      <i class="el-icon-edit" @click="Excerptlick(DocumentWrapData.DESCRIBE_TARGET)"></i>
+                      <i
+                        class="el-icon-edit"
+                        @click="Excerptlick(DocumentWrapData.DESCRIBE_TARGET)"
+                      ></i>
                     </span>
                   </p>
-                  <p class="abstract">{{DocumentWrapData.DESCRIBE_TARGET ? DocumentWrapData.DESCRIBE_TARGET : '空缺'}}</p>
+                  <p
+                    class="abstract"
+                  >{{DocumentWrapData.DESCRIBE_TARGET ? DocumentWrapData.DESCRIBE_TARGET : '空缺'}}</p>
                 </div>
-                <div class="constructItem1" :class="{'constructItem':DocumentWrapData.SIGNIFICANCE && DocumentWrapData.SIGNIFICANCE !== '空缺'}">
+                <div
+                  class="constructItem1"
+                  :class="{'constructItem':DocumentWrapData.SIGNIFICANCE && DocumentWrapData.SIGNIFICANCE !== '空缺'}"
+                >
                   <p class="constructTitle">
                     <span>指出意义</span>
                     <span class="contructionTool">
                       <i class="el-icon-star-off" @click="collectStatusFn"></i>
                       <i class="el-icon-edit" @click="Excerptlick(DocumentWrapData.SIGNIFICANCE)"></i>
                     </span>
-                  <p class="abstract">{{DocumentWrapData.SIGNIFICANCE ? DocumentWrapData.SIGNIFICANCE : '空缺'}}</p>
+                  </p>
+                  <p
+                    class="abstract"
+                  >{{DocumentWrapData.SIGNIFICANCE ? DocumentWrapData.SIGNIFICANCE : '空缺'}}</p>
                 </div>
               </div>
             </div>
@@ -195,10 +275,18 @@
           </li>
         </ul>
       </div>
-      <div class="documentWrap" v-if="isDocumentWrap" :style="{top:documentWrapTop + 'px',left:documentWrapLeft - 550 + 'px'}">
+      <!-- 五年规划纲要指导思想弹窗 -->
+      <div
+        class="documentWrap"
+        v-if="isDocumentWrap"
+        :style="{top:documentWrapTop + 'px',left:documentWrapLeft - 550 + 'px'}"
+      >
         <div class="header">
-          <span>{{DocumentWrapData.CITY_CODE}}</span>
-          <span>指导思想<i class="el-icon-close" @click="DocumentWrapClose"></i></span>
+          <span>{{DocumentWrapData.DOCUNAME}}</span>
+          <span>
+            指导思想
+            <i class="el-icon-close" @click="DocumentWrapClose"></i>
+          </span>
         </div>
         <div class="content scroll">{{DocumentWrapData.GUIDING_IDEOLOGY}}</div>
       </div>
@@ -215,7 +303,12 @@
         </li>
       </ul>
       <!-- 我的收藏弹窗 -->
-      <my-ecollect v-if="myEcollectVisible" @closeMyEcollect="myEcollectHide" :my-ecollect-visible="myEcollectVisible" :word-cloud-data="wordCouldData"></my-ecollect>
+      <my-ecollect
+        v-if="myEcollectVisible"
+        @closeMyEcollect="myEcollectHide"
+        :my-ecollect-visible="myEcollectVisible"
+        :word-cloud-data="wordCouldData"
+      ></my-ecollect>
       <!-- 上位指导选择文档弹窗 -->
       <guide-plan
         @guidePlanClose="guidePlanClose"
@@ -254,9 +347,9 @@ import {
   getDocumentsType,
   collectStatus,
   saveSummaryInfo,
-  login,
-  getGuidingThought,
+  login
 } from '../../api/api'
+import { getStructure } from '@/api/thinkingApi'
 import axios from 'axios'
 import mUtilsFn from '@/config/mUtils.js'
 import leftMenus from './components/leftMenus/leftMenus'
@@ -278,33 +371,19 @@ export default {
   },
   data() {
     return {
-      singleDocumentTitle:'2018政府工作报告',
-      leftTabActive:0,
-      isDocumentWrap:false,// 地图弹窗是否显示
-      documentWrapTop:null,// 地图弹窗左边位置
-      documentWrapLeft:null,// 地图弹窗顶部位置
-      DocumentWrapData:{},// 地图弹窗数据
-      cityName: '中国',
-      areaCode: 10000,
-      geoJsonData: '',
-      echartsMap: null, // 中间地图echarts实例
-      map: null,
-      district: null,
-      cityCode: 100000,
-      citySelect: null,
-      districtSelect: null,
-      opts: {},
-      areaData: {},
-      mapData: [],
-      codeList: [],
-      wordCouldData: [], // 词云数据
+      singleDocumentTitle: '2018政府工作报告',
+      leftTabActive: 0,
+      isDocumentWrap: false, // 地图弹窗是否显示
+      documentWrapTop: null, // 地图弹窗左边位置
+      documentWrapLeft: null, // 地图弹窗顶部位置
+      DocumentWrapData: {}, // 地图弹窗数据wordCouldData: [], // 词云数据
       isReportChart: false, // 控制报告参考政府工作报告图表显隐
       myEcollectVisible: false, // 控制我的收藏显隐
       guidePlanVisible: false, // 控制上位指导选择文档弹窗显隐
       singleDocumentVisible: false, // 控制文件分析弹窗显隐
       uploadDocuVisible: false, // 控制文档上传弹窗显隐
       summaryVisible: false, // 控制摘要弹窗显隐
-      selectTxt: 'aaa', // 选中文字内容
+      selectTxt: '', // 选中文字内容
       isMenu: false, // 控制选中文字后菜单是否显示
       menuTop: null,
       menuLeft: null,
@@ -321,7 +400,42 @@ export default {
         }
       ],
       documentValue: '',
-      DocumentsType: {} // 各市文档报告类型数据
+      DocumentsType: {}, // 各市文档报告类型数据
+      structureYears: [
+        {
+          value: '2006',
+          label: '十一五规划纲要'
+        },
+        {
+          value: '2011',
+          label: '十二五规划纲要'
+        },
+        {
+          value: '2016',
+          label: '十三五规划纲要'
+        },
+        {
+          value: '2021',
+          label: '十四五规划纲要'
+        }
+      ],
+      structureParams: {
+        // 获取各市县五年规划纲要指导思想参数
+        city_code: null,
+        file_type: '0',
+        file_year: '2016'
+      },
+
+      cityName: '中国',
+      geoJsonData: '',
+      echartsMap: null, // 中间地图echarts实例
+      map: null,
+      district: null,
+      cityCode: 330000,
+      citySelect: null,// 城市下拉选择框
+      districtSelect: null,// 县城下拉选择框
+      areaData: {},
+      mapData: [],
     }
   },
 
@@ -343,7 +457,7 @@ export default {
     this.district.search('中国', (status, result) => {
       if (status == 'complete') {
         this.getData(result.districtList[0], '', 100000)
-        this.search('province', 'ddd')
+        this.search('province', 'checkedCity')
       }
     })
     this.echartsMap.on('click', this.echartsMapClick)
@@ -353,8 +467,8 @@ export default {
   methods: {
     // 选中文字后显示菜单按钮组
     selectText(e) {
-      console.log(e);
-      
+      console.log(e)
+
       if (document.Selection) {
         //ie浏览器
         this.selectTxt = document.selection.createRange().text
@@ -375,7 +489,6 @@ export default {
       this.summaryVisible = true
       this.isMenu = false
       this.selectTxt = val
-      
       console.log('b' + this.selectTxt)
     },
     // 文档素材展开收起
@@ -396,20 +509,111 @@ export default {
     historyTabClick() {
       this.rightHistoryTab = !this.rightHistoryTab
     },
-    // 根据地区代码获取该地区地理经纬度范围
+    // 保存摘要并关闭弹窗
+    submitSummaryInfo() {
+      this.summaryVisible = false
+    },
+    // 打开文档上传弹窗
+    openUploadDocument() {
+      this.uploadDocuVisible = true
+    },
+    // 关闭文档上传弹窗
+    closeUploadDocu() {
+      this.uploadDocuVisible = false
+    },
+    // 提交上传文档表单
+    submitUploadDocu() {
+      this.uploadDocuVisible = false
+    },
+    // 获取文档分析词云数据
+    getCiYunFn() {
+      getCiYun().then(res => {
+        this.wordCouldData = res.data
+      })
+    },
+    // 获取各市文档报告类型数据
+    getDocumentsTypeFn() {
+      getDocumentsType().then(res => {
+        this.DocumentsType = res.data
+      })
+    },
+    // 收藏请求状态
+    collectStatusFn() {
+      collectStatus().then(res => {
+        this.$message({
+          message: res.message,
+          type: res.code == 0 ? 'success' : 'error'
+        })
+      })
+    },
+    // 将中间图表导出为图片
+    saveAsImage() {
+      mUtilsFn.saveAsImage(this.echartsMap)
+    },
+    // 关闭摘要弹窗
+    closeSummaryInfo() {
+      this.summaryVisible = false
+    },
+    // 打开我的收藏弹窗
+    myCollectClick() {
+      this.myEcollectVisible = true
+    },
+    // 关闭我的收藏窗口
+    myEcollectHide() {
+      this.myEcollectVisible = false
+    },
+    // 关闭选择文档弹窗
+    guidePlanClose() {
+      this.guidePlanVisible = false
+    },
+    // 关闭文档分析弹窗
+    closeSingleDocument() {
+      this.singleDocumentVisible = false
+    },
+    chooseDocumetClick() {
+      this.singleDocumentVisible = true
+      this.guidePlanVisible = false
+      this.isReportChart = false
+    },
+    // 左侧tab个项点击事件
+    menusClick(data) {
+      this.leftTabActive = data
+      switch (data) {
+        case 0:
+          this.guidePlanVisible = false
+          this.isReportChart = false
+          break
+        case 1:
+          this.isReportChart = false
+          break
+        case 2:
+          this.isReportChart = true
+          break
+      }
+    },
+    // 关闭五年规划纲要地图弹窗
+    DocumentWrapClose() {
+      this.isDocumentWrap = false
+      this.DocumentWrapData = {}
+    },
+    /*
+      利用 AMapUI.loadUI可以构造一个创建一个 DistrictExplorer 实例，然后利用 DistrictExplorer 的实例，
+      可以根据当前需要加载城市的 areaCode获取到该城市的 geo 数据
+    */
     loadMapData(areaCode) {
       AMapUI.loadUI(['geo/DistrictExplorer'], DistrictExplorer => {
         var districtExplorer = (window.districtExplorer = new DistrictExplorer({
-          eventSupport: true, //打开事件支持
+          eventSupport: true, // 打开事件支持
           map: this.map
         }))
-
+        // 创建一个实例
         districtExplorer.loadAreaNode(areaCode, (error, areaNode) => {
           if (error) {
             console.error(error)
             return
           }
           let mapJson = {}
+          // 特别注意这里哦，如果查看过正常的geojson文件，都会发现，文件都是以features 字段开头的，所以这里要记得加上
           mapJson.features = areaNode.getSubFeatures()
 
           this.loadMapChart(this.cityName, mapJson)
@@ -417,6 +621,7 @@ export default {
         })
       })
     },
+    // 处理获取出来的边界数据
     getData(data, level, adcode) {
       // 清空下一级别的下拉列表
       if (level === 'province') {
@@ -431,6 +636,7 @@ export default {
         var contentSub = new Option('--请选择--')
         var curlevel = subList[0].level
         if (curlevel === 'street') {
+          // 为了配合echarts地图区县名称显示正常，这边街道级别数据需要特殊处理
           let mapJsonList = this.geoJsonData.features
           let mapJson = {}
           for (let i in mapJsonList) {
@@ -439,6 +645,7 @@ export default {
             }
           }
           this.mapData = []
+          // 这个mapData里包含每个区域的code、名称、对应的等级，实现第三步功能时能用上
           this.mapData.push({
             name: this.cityName,
             value: Math.random() * 100,
@@ -450,10 +657,12 @@ export default {
         }
         var curList = document.querySelector('#' + curlevel)
         curList.add(contentSub)
+        // 街道级以上的数据处理方式
         this.mapData = []
         for (var i = 0, l = subList.length; i < l; i++) {
           var name = subList[i].name
           var cityCode = subList[i].adcode
+          // 这个mapData里包含每个区域的code、名称、对应的等级，实现第三步功能时能用上
           this.mapData.push({
             name: name,
             value: Math.random() * 100,
@@ -465,19 +674,22 @@ export default {
           contentSub.setAttribute('value', levelSub)
           contentSub.center = subList[i].center
           contentSub.adcode = subList[i].adcode
+          if (contentSub.adcode == 330000) {
+            contentSub.selected = true
+          }
           curList.add(contentSub)
         }
         this.loadMapData(adcode)
         this.areaData[curlevel] = curList
       }
     },
-    search(area, aaa) {
-      if(this.leftTabActive === 1 && area === 'city'){
+    search(area, checkedCity) {
+      if (this.leftTabActive === 1 && area === 'city') {
         this.guidePlanVisible = true
       }
       let obj = this.areaData[area]
       var option = null
-      if (aaa) {
+      if (checkedCity) {
         option = obj[23]
       } else {
         var option = obj[obj.options.selectedIndex]
@@ -500,36 +712,6 @@ export default {
     loadMapChart(mapName, data) {
       this.$echarts.registerMap(mapName, data)
       var option = {
-        // tooltip: {
-        //   triggerOn: 'click',
-        //   padding: 0,
-        //   enterable: true,
-        //   transitionDuration: 1,
-        //   textStyle: {
-        //     color: '#000',
-        //     decoration: 'none'
-        //   },
-        //   formatter: function(params) {
-        //     console.log(params)
-        //     let tipHtml = `<div class="documentWrap">
-        //                         <div class="header">
-        //                             <span>${params.name}</span>
-        //                             <span>指导思想</span>
-        //                         </div>
-        //                         <div class="content scroll">“十三五”时期是全面建成小康社会的决胜阶段，我省必须肩负起“干在实处永无止境,走在前列要谋新篇”的新使命努力在提高全面建成小康社会水平上更进一步、在推进改革开放和社会主义现代化建设中更快一步，谱写美丽浙江、美好生活的新篇章。一）发展背景。“十二五”时期是我省发展很不平凡的5年。面对错综复杂的宏观环境和艰巨繁重的改革发展稳定任务，全省上下深入实施“八八战略”， 积极适应经济发展新常态，按照干好“一三五”、实现“四翻番”部署，顽强拼搏、开拓创新， 胜利实现“十二五”规划目标。综合实力迈上新台阶，2015年全省生产总值42886亿元，人均生产总值77644元。转型升级迈出新步伐，着力打好以治水为突破口的转型升级组合拳，第三产业占生产总值比重超过第二产业，工业结构调整积极推进，现代农业加快发展。创新驱动形成新格局，科技综合实力和区域创新能力继续位居全国前列。社会建设取得新进步，基本公共服务均等化水平明显提高，社会保障体系更加健全。人民生活得到新改善，城乡居民收入稳居全国前列，年人均收入4600元以下贫困现象全面消除。美丽浙江呈现新面貌，地表水和空气质量持续好转，美丽乡村建设深入推进，节能减排完成预定目标。改革开放增添新活力，全面深化改革有力推进，对外开放不断深入，平安浙江和法治浙江建设全面深化，社会主义协商民主得到加强，治理体系和治理能力现代化取得进展。社会主义核心价值观深入人心，文化软实力不断提升。
-        //                         </div>
-        //                       </div>`
-        //     return tipHtml
-        //   }
-        // },
-        // visualMap: {
-        //   show: false,
-        //   inRange: {
-        //     color: [
-        //       'transparent'
-        //     ]
-        //   }
-        // },
         series: [
           {
             name: '数据名称',
@@ -569,117 +751,27 @@ export default {
           }
         ]
       }
+      this.echartsMap.clear()
       this.echartsMap.setOption(option)
     },
-    // 保存摘要并关闭弹窗
-    submitSummaryInfo() {
-      this.summaryVisible = false
-    },
-    // 打开文档上传弹窗
-    openUploadDocument() {
-      this.uploadDocuVisible = true
-    },
-    // 关闭文档上传弹窗
-    closeUploadDocu() {
-      this.uploadDocuVisible = false
-    },
-    // 提交上传文档表单
-    submitUploadDocu() {
-      this.uploadDocuVisible = false
-    },
-    // 获取文档分析词云数据
-    getCiYunFn() {
-      getCiYun().then(res => {
-        this.wordCouldData = res.data
-      })
-    },
-    // 获取各市文档报告类型数据
-    getDocumentsTypeFn() {
-      getDocumentsType().then(res => {
-        this.DocumentsType = res.data
-      })
-    },
-    // 收藏请求状态
-    collectStatusFn() {
-      collectStatus().then(res => {
-        this.$message({
-          message: res.message,
-          type: res.code == 0 ? 'success' : 'error'
-        })
-      })
-    },
-    // 获取获取浙江省各市五年规划指导思想
-    getGuidingThoughtFn() {
-      getGuidingThought().then(res => {
-        this.DocumentWrapData = res.data
-        console.log(this.DocumentWrapData)
-      })
-    },
-    // 将中间图表导出为图片
-    saveAsImage() {
-      mUtilsFn.saveAsImage(this.echartsMap)
-    },
-    // 关闭摘要弹窗
-    closeSummaryInfo() {
-      this.summaryVisible = false
-    },
-    // 打开我的收藏弹窗
-    myCollectClick() {
-      this.myEcollectVisible = true
-    },
-    // 关闭我的收藏窗口
-    myEcollectHide() {
-      this.myEcollectVisible = false
-    },
-    // 关闭选择文档弹窗
-    guidePlanClose() {
-      this.guidePlanVisible = false
-    },
-    // 关闭文档分析弹窗
-    closeSingleDocument() {
-      this.singleDocumentVisible = false
-    },
-    chooseDocumetClick(){
-      this.singleDocumentVisible = true
-      this.guidePlanVisible = false
-      this.isReportChart = false
-    },
-    // 左侧tab个项点击事件
-    menusClick(data) {
-      this.leftTabActive = data
-      switch (data) {
-        // case 0:
-        //   this.singleDocumentVisible = true
-        //   this.guidePlanVisible = false
-        //   this.isReportChart = false
-        //   break
-        case 1:
-          this.isReportChart = false
-          break
-        case 2:
-          this.isReportChart = true
-          break
-      }
-    },
-    // 地图点击事件
+    // 地图点击事件-获取各市县五年规划纲要指导思想
     echartsMapClick(params) {
-      console.log(params.data.cityCode)
-     
-      if(params.data.cityCode === "331000"){
-        this.getGuidingThoughtFn()
-        this.documentWrapTop = params.event.offsetY
-        this.documentWrapLeft = params.event.offsetX
-        this.isDocumentWrap = true
+      if (this.leftTabActive === 0) {
+        this.structureParams.city_code = params.data.cityCode
+        getStructure(this.structureParams).then(res => {
+          if (res.data) {
+            this.documentWrapTop = params.event.offsetY
+            this.documentWrapLeft = params.event.offsetX
+            this.DocumentWrapData = res.data
+            this.isDocumentWrap = true
+          } else {
+            this.$message({
+              message: '该地区未在该时段上传文档',
+              type: 'warning'
+            })
+          }
+        })
       }
-      // this.cityName = params.data.name;
-      // this.cityCode = params.data.cityCode;
-      // this.district.setLevel(params.data.level); //行政区级别
-      // this.district.setExtensions('all');
-      //行政区查询
-      //按照adcode进行查询可以保证数据返回的唯一性
-    },
-    DocumentWrapClose() {
-      this.isDocumentWrap = false
     }
   }
 }

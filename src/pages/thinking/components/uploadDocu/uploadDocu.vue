@@ -27,8 +27,8 @@
         <div class="el-upload__tip" slot="tip">只能上传word文件，且不超过100M</div>
       </el-upload>
       <el-form :inline="true" ref="dialogForm" :model="formUpload" :rules="rules" class="formUploadForm">
-        <el-form-item label="文档归属区域" prop="file_city">
-          <el-select v-model="formUpload.file_city" placeholder="请选择文档归属区域">
+        <el-form-item label="文档归属区域" prop="city_code">
+          <el-select v-model="formUpload.city_code" placeholder="请选择文档归属区域">
             <el-option v-for="(item,index) in fileCityOpts" :key="index" :label="item.LABEL" :value="item.VALUE"></el-option>
           </el-select>
         </el-form-item>
@@ -77,8 +77,8 @@ export default {
         // 上传参数
         folder_no: '',
         file_province: '浙江省',
-        province_code: '330000000000',
-        file_city: '',
+        province_code: '',
+        file_city: '330000',
         city_code: '',
         file_type: '',
         file_year: ''
