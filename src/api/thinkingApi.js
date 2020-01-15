@@ -14,6 +14,14 @@ export function saveContent(data) {
     data
   })
 }
+// 删除摘要
+export function delEcollect(data) {
+  return request({
+    url: '/programme/word/delete_Collection',
+    method: 'post',
+    data
+  })
+}
 // 提交上传文档
 export function uploadDocu(data) {
   return request({
@@ -26,6 +34,14 @@ export function uploadDocu(data) {
 export function getStructure(params) {
   return request({
     url: '/programme/word/findStructure',
+    method: 'get',
+    params
+  })
+}
+// 获取用户的收藏数据
+export function getEcollect(params) {
+  return request({
+    url: '/programme/word/queryCollection',
     method: 'get',
     params
   })

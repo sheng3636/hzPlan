@@ -1,0 +1,104 @@
+@import '@/assets/style/mixin.scss';
+.listMain {
+  padding-bottom: 10px;
+  margin: 10px auto;
+  // border: 1px solid rgba(22, 155, 213, 1);
+}
+.constractArea {
+  .tagWrap {
+    margin: 10px auto 0 auto;
+    @include wh(95%, auto);
+    flex-wrap: wrap;
+    align-items: space-between;
+    align-content: space-between;
+    @include fj(space-between);
+
+    .tagItem {
+      display: block;
+      margin-bottom: 10px;
+      @include wh(110px, 40px);
+      line-height: 40px;
+      text-align: center;
+      border-radius: 5px;
+      font-size: 16px;
+      border: 1px solid rgba(121, 121, 121, 1);
+      &.active {
+        border: none;
+        background: rgba(0, 129, 255, 1);
+      }
+    }
+  }
+
+  .blueLine {
+    margin: 0 auto 10px auto;
+    background: rgba(22, 155, 213, 1);
+    @include wh(90%, 1px);
+  }
+
+  .constructWrap {
+    margin: 0 auto;
+    width: 90%;
+    max-height: 555px;
+
+    .constructItem {
+      padding: 10px;
+      margin-bottom: 10px;
+      width: calc(100% - 5px);
+      border-radius: 5px;
+      border: 1px solid rgba(121, 121, 121, 1);
+      background: rgba(0, 129, 255, 1);
+
+      .constructTitle {
+        @include fj(space-between);
+
+        .contructionTool {
+          display: block !important;
+        }
+
+        span {
+          &:nth-child(1) {
+            font-weight: bold;
+            @include sc(20px, #FF0000);
+          }
+
+          &:nth-child(2) {
+            font-size: 22px;
+
+            i {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .abstract {
+        text-indent: 27px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical
+      }
+    }
+
+    .constructItem1 {
+      padding: 5px 10px;
+      margin-bottom: 10px;
+      width: calc(100% - 5px);
+      border-radius: 5px;
+      border: 1px solid rgba(22, 155, 213, 1);
+
+      .constructTitle {
+        .contructionTool {
+          display: none;
+        }
+
+        @include sc(20px, #fff);
+      }
+
+      .abstract {
+        text-indent: 27px;
+      }
+    }
+  }
+}

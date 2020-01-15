@@ -1,22 +1,16 @@
 <template>
-  <el-dialog
-    title="摘要"
-    :visible.sync="summaryVisible"
-    :close-on-click-modal="false"
-    :close-on-press-escape="false"
-    :show-close="false"
-    custom-class="summaryDialog"
-    width="30%">
-    <el-form :model="formSummary" label-width="60px" :rules="rules" ref="dialogForm" class="inner">
+  <el-dialog title="摘要" v-if="summaryVisible" :visible.sync="summaryVisible" :close-on-click-modal="false"
+    :close-on-press-escape="false" :show-close="false" custom-class="summaryDialog" width="30%" append-to-body>
+    <el-form :model="summaryVal" label-width="60px" :rules="rules" ref="dialogForm" class="inner">
       <el-row>
         <el-col :span="24">
           <el-form-item label="标题" prop="title">
-            <el-input v-model="formSummary.title" placeholder="请输入标题"></el-input>
+            <el-input v-model="summaryVal.title" readonly="" placeholder="请输入标题"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="24">
           <el-form-item label="摘要" prop="content">
-            <el-input type="textarea" v-model="formSummary.content" :rows="6" placeholder="请输入摘要"></el-input>
+            <el-input type="textarea" v-model="summaryVal.content" :rows="6" placeholder="请输入摘要"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -33,36 +27,24 @@ export default {
   name: 'summaryInfo',
   data() {
     return {
-      formSummary: {
-        title:'',
-        content: ''
-      },
-      rules:{
-        title: [
-          { required: true, message: '请输入标题', trigger: 'blur' }
-        ],
-        content: [
-          { required: true, message: '请输入摘要', trigger: 'blur' }
-        ],
-      },
+      rules: {
+        title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+        content: [{ required: true, message: '请输入摘要', trigger: 'blur' }]
+      }
     }
   },
-  props:{
-    summaryVisible:{
+  props: {
+    summaryVisible: {
       type: Boolean,
       default: false
     },
-    summaryVal:{
-      type: String,
-      default: 'fdsdf'
+    summaryVal: {
+      type: Object,
+      default: {}
     }
   },
-  watch:{
-    summaryVal: function (val, oldVal) {
-      this.formSummary.content = val
-    }
-  },
-  methods:{
+  mounted() {},
+  methods: {
     // 关闭摘要弹窗
     summaryHide(formName) {
       this.$refs[formName].resetFields()
@@ -71,8 +53,8 @@ export default {
     // 保存摘要
     onSubmit(formName) {
       this.$refs[formName].validate(valid => {
-        if (valid) {   
-          saveContent(this.formSummary).then(res => {
+        if (valid) {
+          saveContent(this.summaryVal).then(res => {
             this.$message({
               message: res.message,
               type: res.code === '0' ? 'success' : 'error'

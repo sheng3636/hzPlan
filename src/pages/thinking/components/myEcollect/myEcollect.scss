@@ -1,4 +1,4 @@
-@import '../../assets/style/mixin.scss';
+@import '@/assets/style/mixin.scss';
 .myEcollectDialog {
   .inner{
     padding: 10px 20px;
@@ -26,15 +26,39 @@
       border-radius: 5px;
       border: 1px solid #fff;
       .title {
+        margin-bottom: 5px;
         @include sc(22px, #fff);
       }
       .content{
         color: #fff;
         text-indent: 27px;
+        .list{
+          span {
+            &:nth-child(1) {
+              color: #111;
+              font-weight:bold;
+            }
+          }
+        }
       }
       #hotWord {
         @include wh(100%, 300px);
       }
     }
+  }
+}
+.EcollectTool {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+  i {
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 5px;
+    font-size: 18px;
+    color: #ccc;
+    cursor: pointer;
+    text-indent: 0;
   }
 }

@@ -1,4 +1,4 @@
-@import '../../assets/style/mixin.scss';
+@import '@/assets/style/mixin.scss';
 
 // 左边选择区域
 .selectWrap{
@@ -223,25 +223,7 @@
     }
   }
 }
-// 选择温州弹出的菜单
-.selectmenu {
-  padding: 5px;
-  position: absolute;
-  z-index: 9999;
-  width: 100px;
-  border-radius: 5px;
-  background: #fff;
-  color: #333;
-  li {
-    line-height: 25px;
-    cursor: pointer;
-    i{
-      margin-left: 5px;
-      margin-right: 10px;
-      @include sc(18px, #66ccff)
-    }
-  }
-}
+
 // 摘编弹框
 .excerptModal{
   position: absolute;

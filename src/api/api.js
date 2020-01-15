@@ -16,6 +16,10 @@ export const getDocumentsType = (json) => fetch('https://www.fastmock.site/mock/
  */
 export const collectStatus = (json) => fetch('https://www.fastmock.site/mock/1f3a07523606cd78e586a1780f46c328/hzPlan/collectStatus', {})
 /**
+ * 删除收藏
+ */
+export const delEcollect = (json) => fetch('https://www.fastmock.site/mock/1f3a07523606cd78e586a1780f46c328/hzPlan/delEcollect', {})
+/**
  * 保存摘要
  */
 export const saveSummaryInfo = (json) => fetch('https://www.fastmock.site/mock/1f3a07523606cd78e586a1780f46c328/hzPlan/saveSummaryInfo', {})
