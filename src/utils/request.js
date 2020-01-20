@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth'
 
 // 创建一个axios实例
 const service = axios.create({
-  baseURL: '/imp', // url = base url + request url
+  baseURL: process.env.imp, // url = base url + request url
   withCredentials: false, // 表示跨域请求时是否需要使用凭证，默认为false
   timeout: 10000 // 如果请求超过 `timeout` 的时间，请求将被中断
 })

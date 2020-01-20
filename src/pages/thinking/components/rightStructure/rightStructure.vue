@@ -26,7 +26,7 @@
             <span>举起旗帜</span>
             <span class="contructionTool">
               <i class="el-icon-star-off" @click="collectStatusFn('举起旗帜',docuWrapData.LIFT_FLAG)"></i>
-              <i class="el-icon-edit" @click="editCollect('举起旗帜',docuWrapData.LIFT_FLAG,docuWrapData.DOCUNAME,docuWrapData.DOCUNAME,'')"></i>
+              <i class="el-icon-edit" @click="editCollect('举起旗帜',docuWrapData.LIFT_FLAG,docuWrapData.DOCUNAME,'')"></i>
             </span>
           </p>
           <p class="abstract" @mouseup="selectText($event,'举起旗帜',docuWrapData.DOCUNAME)">{{docuWrapData.LIFT_FLAG ? docuWrapData.LIFT_FLAG : '空缺'}}</p>

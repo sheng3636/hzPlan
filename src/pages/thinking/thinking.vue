@@ -6,26 +6,44 @@
       <div id="mapContainer"></div>
       <!-- 左侧tab切换区域 -->
       <left-menus @menusClick="menusClick"></left-menus>
+      <!-- 左下角地图级别 -->
+      <ul class="mapLevel">
+        <li @click="mapBack('country')">中国</li>
+        <li v-if="provinceVal.cityName" @click="mapBack('province')"><i class="el-icon-arrow-right"></i>{{provinceVal.cityName}}</li>
+        <li v-if="cityVal.cityName" @click="mapBack('city')"><i class="el-icon-arrow-right"></i>{{cityVal.cityName}}</li>
+        <li v-if="districtVal.cityName" @click="mapBack('district')"><i class="el-icon-arrow-right"></i>{{districtVal.cityName}}</li>
+      </ul>
       <!-- 左边选择区域 -->
       <ul class="selectWrap">
         <li>
-          <select id="province" @change="search('province')"></select>
-        </li>
-        <li>
-          <select id="city" @change="search('city')"></select>
-        </li>
-        <li>
-          <select id="district" @change="search('district')"></select>
-        </li>
-        <li>
-          <el-select v-model="structureParams.file_year" placeholder="请选择">
-            <el-option v-for="item in structureYears" :key="item.value" :label="item.label" :value="item.value">
+          <el-select size="small" v-model="provinceVal" value-key="cityName" @change="search('province')" placeholder="请选择省份">
+            <el-option v-for="item in provinceOpts" :key="item.value.cityName" :label="item.cityName"
+              :value="item.value">
             </el-option>
           </el-select>
         </li>
         <li>
-          <el-button size="mini" @click="saveAsImage">导出地图</el-button>
+          <el-select size="small" v-model="cityVal" value-key="cityName" @change="search('city')" placeholder="请选择城市">
+            <el-option v-for="item in cityOpts" :key="item.value.cityName" :label="item.cityName" :value="item.value">
+            </el-option>
+          </el-select>
         </li>
+        <li>
+          <el-select size="small" v-model="districtVal" value-key="cityName" @change="search('district')" placeholder="请选择县区">
+            <el-option v-for="item in districtOpts" :key="item.value.cityName" :label="item.cityName"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </li>
+        <li>
+          <el-select size="small" v-model="structureParams.file_year" placeholder="请选择">
+            <el-option v-for="item in structureYears" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </li>
+        <!-- <li>
+          <el-button size="mini" @click="saveAsImage">导出地图</el-button>
+        </li> -->
       </ul>
       <!-- 右侧区域 -->
       <div class="mainRight">
@@ -110,8 +128,8 @@
         <div class="content scroll">{{docuWrapData.GUIDING_IDEOLOGY}}</div>
       </div>
       <!-- 我的收藏弹窗 -->
-      <my-ecollect v-if="myEcollectVisible" @closeMyEcollect="myEcollectHide" :my-ecollect-visible="myEcollectVisible" :my-ecollect-list="myEcollectList"
-        :word-cloud-data="wordCouldData"></my-ecollect>
+      <my-ecollect v-if="myEcollectVisible" @closeMyEcollect="myEcollectHide" :my-ecollect-visible="myEcollectVisible"
+        :my-ecollect-list="myEcollectList" :word-cloud-data="wordCouldData"></my-ecollect>
       <!-- 上位指导选择文档弹窗 -->
       <guide-plan @guidePlanClose="guidePlanClose" :guide-plan-visible="guidePlanVisible">
       </guide-plan>
@@ -156,13 +174,14 @@ export default {
   },
   data() {
     return {
-      myEcollectList:{},// 我的收藏数据
+      myEcollectList: {}, // 我的收藏数据
       singleDocumentTitle: '2018政府工作报告',
       leftTabActive: 0,
       isDocumentWrap: false, // 地图弹窗是否显示
       documentWrapTop: null, // 地图弹窗左边位置
       documentWrapLeft: null, // 地图弹窗顶部位置
-      docuWrapData: {}, // 地图弹窗数据wordCouldData: [], // 词云数据
+      docuWrapData: {}, // 地图弹窗数据
+      wordCouldData: [], // 词云数据
       isReportChart: false, // 控制报告参考政府工作报告图表显隐
       myEcollectVisible: false, // 控制我的收藏显隐
       guidePlanVisible: false, // 控制上位指导选择文档弹窗显隐
@@ -204,26 +223,37 @@ export default {
       structureParams: {
         // 获取各市县五年规划纲要指导思想参数
         city_code: null,
+        city_type: '0',
         file_type: '0',
         file_year: '2016'
       },
-
+      
+      provinceVal: {
+        cityName: '浙江省',
+        center: {
+          P: 30.287459,
+          R: 120.15357599999999,
+          lng: 120.153576,
+          lat: 30.287459
+        },
+        levelSub: 'province',
+        cityCode: '330000'
+      },
+      cityVal: {},
+      districtVal: {},
+      provinceOpts: [],
+      cityOpts: [],
+      districtOpts: [],
       cityName: '中国',
       geoJsonData: '',
       echartsMap: null, // 中间地图echarts实例
       map: null,
       district: null,
-      cityCode: 330000,
-      citySelect: null, // 城市下拉选择框
-      districtSelect: null, // 县城下拉选择框
-      areaData: {},
       mapData: []
     }
   },
 
   mounted() {
-    this.citySelect = document.getElementById('city')
-    this.districtSelect = document.getElementById('district')
     this.echartsMap = this.$echarts.init(document.getElementById('mapChart'))
     // 初始化地图
     this.map = new AMap.Map('mapContainer', {
@@ -238,7 +268,7 @@ export default {
     this.district = new AMap.DistrictSearch(opts) //注意：需要使用插件同步下发功能才能这样直接使用
     this.district.search('中国', (status, result) => {
       if (status == 'complete') {
-        this.getData(result.districtList[0], '', 100000)
+        this.getData(result.districtList[0], 'province', 100000)
         this.search('province', 'checkedCity')
       }
     })
@@ -297,9 +327,9 @@ export default {
       })
     },
     // 将中间图表导出为图片
-    saveAsImage() {
-      mUtilsFn.saveAsImage(this.echartsMap)
-    },
+    // saveAsImage() {
+    //   mUtilsFn.saveAsImage(this.echartsMap)
+    // },
     // 打开我的收藏弹窗
     myCollectClick() {
       this.myEcollectVisible = true
@@ -337,8 +367,8 @@ export default {
           break
         case 2:
           this.isReportChart = true
-          this.DocumentWrapClose()
           this.rightHistoryTab = false
+          this.DocumentWrapClose()
           break
       }
     },
@@ -353,7 +383,7 @@ export default {
     */
     loadMapData(areaCode) {
       AMapUI.loadUI(['geo/DistrictExplorer'], DistrictExplorer => {
-        var districtExplorer = (window.districtExplorer = new DistrictExplorer({
+        let districtExplorer = (window.districtExplorer = new DistrictExplorer({
           eventSupport: true, // 打开事件支持
           map: this.map
         }))
@@ -376,16 +406,18 @@ export default {
     getData(data, level, adcode) {
       // 清空下一级别的下拉列表
       if (level === 'province') {
-        this.citySelect.innerHTML = ''
-        this.districtSelect.innerHTML = ''
+        this.cityOpts = []
+        this.districtOpts = []
+        this.cityVal = {}
+        this.districtVal = {}
       } else if (level === 'city') {
-        this.districtSelect.innerHTML = ''
+        this.districtOpts = []
+        this.districtVal = {}
       }
 
-      var subList = data.districtList
+      let subList = data.districtList
       if (subList) {
-        var contentSub = new Option('--请选择--')
-        var curlevel = subList[0].level
+        let curlevel = subList[0].level
         if (curlevel === 'street') {
           // 为了配合echarts地图区县名称显示正常，这边街道级别数据需要特殊处理
           let mapJsonList = this.geoJsonData.features
@@ -406,13 +438,14 @@ export default {
           this.geoJsonData = mapJson
           return
         }
-        var curList = document.querySelector('#' + curlevel)
-        curList.add(contentSub)
+        let levelList = curlevel + 'Opts'
         // 街道级以上的数据处理方式
         this.mapData = []
-        for (var i = 0, l = subList.length; i < l; i++) {
-          var name = subList[i].name
-          var cityCode = subList[i].adcode
+        this[levelList] = []
+        for (let i = 0, l = subList.length; i < l; i++) {
+          let name = subList[i].name
+          let cityCode = subList[i].adcode
+          let center = subList[i].center
           // 这个mapData里包含每个区域的code、名称、对应的等级，实现第三步功能时能用上
           this.mapData.push({
             name: name,
@@ -420,49 +453,72 @@ export default {
             cityCode: cityCode,
             level: curlevel
           })
-          var levelSub = subList[i].level
-          contentSub = new Option(name)
-          contentSub.setAttribute('value', levelSub)
-          contentSub.center = subList[i].center
-          contentSub.adcode = subList[i].adcode
-          if (contentSub.adcode == 330000) {
-            contentSub.selected = true
-          }
-          curList.add(contentSub)
+          let levelSub = subList[i].level
+          this[levelList].push({
+            cityName: name,
+            value: {
+              cityName: name,
+              center: center,
+              levelSub: levelSub,
+              cityCode: cityCode
+            }
+          })
         }
         this.loadMapData(adcode)
-        this.areaData[curlevel] = curList
       }
     },
     search(area, checkedCity) {
       if (this.leftTabActive === 1 && area === 'city') {
         this.guidePlanVisible = true
       }
-      let obj = this.areaData[area]
-      var option = null
+      let levelList = null
       if (checkedCity) {
-        option = obj[23]
+        levelList = {
+          cityName: '浙江省',
+          center: {
+            P: 30.287459,
+            R: 120.15357599999999,
+            lng: 120.153576,
+            lat: 30.287459
+          },
+          levelSub: 'province',
+          cityCode: '330000'
+        }
       } else {
-        var option = obj[obj.options.selectedIndex]
+        levelList = this[area + 'Val']
       }
+      console.log(levelList);
+      
+      let adcode = levelList.cityCode
+      this.cityName = levelList.cityName
 
-      var adcode = option.adcode
-      this.cityName = option.text
-      this.cityCode = adcode
-      this.district.setLevel(option.value) //行政区级别
+      this.district.setLevel(area) //行政区级别
       this.district.setExtensions('all')
       //行政区查询
       //按照adcode进行查询可以保证数据返回的唯一性
       this.district.search(adcode, (status, result) => {
         if (status === 'complete') {
-          this.getData(result.districtList[0], obj.id, adcode)
+          this.getData(result.districtList[0], area, adcode)
         }
       })
+    },
+    mapBack(level) {
+      this.DocumentWrapClose()
+      if(level === 'country'){
+        this.district.search('中国', (status, result) => {
+          if (status == 'complete') {
+            this.getData(result.districtList[0], 'province', 100000)
+            this.provinceVal = {}
+          }
+        })
+      } else {
+        this.search(level)
+      }
     },
     // 渲染地图echarts
     loadMapChart(mapName, data) {
       this.$echarts.registerMap(mapName, data)
-      var option = {
+      let option = {
         series: [
           {
             name: '数据名称',
@@ -508,6 +564,13 @@ export default {
     // 地图点击事件-获取各市县五年规划纲要指导思想
     echartsMapClick(params) {
       if (this.leftTabActive === 0) {
+        if (params.data.level === 'city') {
+          this.structureParams.city_type = '0'
+        } else if (params.data.level === 'district') {
+          this.structureParams.city_type = '1'
+        } else {
+          this.structureParams.city_type = '2'
+        }
         this.structureParams.city_code = params.data.cityCode
         getStructure(this.structureParams).then(res => {
           if (res.data) {
