@@ -9,14 +9,18 @@
       <!-- 左下角地图级别 -->
       <ul class="mapLevel">
         <li @click="mapBack('country')">中国</li>
-        <li v-if="provinceVal.cityName" @click="mapBack('province')"><i class="el-icon-arrow-right"></i>{{provinceVal.cityName}}</li>
-        <li v-if="cityVal.cityName" @click="mapBack('city')"><i class="el-icon-arrow-right"></i>{{cityVal.cityName}}</li>
-        <li v-if="districtVal.cityName" @click="mapBack('district')"><i class="el-icon-arrow-right"></i>{{districtVal.cityName}}</li>
+        <li v-if="provinceVal.cityName" @click="mapBack('province')"><i
+            class="el-icon-arrow-right"></i>{{provinceVal.cityName}}</li>
+        <li v-if="cityVal.cityName" @click="mapBack('city')"><i class="el-icon-arrow-right"></i>{{cityVal.cityName}}
+        </li>
+        <li v-if="districtVal.cityName" @click="mapBack('district')"><i
+            class="el-icon-arrow-right"></i>{{districtVal.cityName}}</li>
       </ul>
       <!-- 左边选择区域 -->
       <ul class="selectWrap">
         <li>
-          <el-select size="small" v-model="provinceVal" value-key="cityName" @change="search('province')" placeholder="请选择省份">
+          <el-select size="small" v-model="provinceVal" value-key="cityName" @change="search('province')"
+            placeholder="请选择省份">
             <el-option v-for="item in provinceOpts" :key="item.value.cityName" :label="item.cityName"
               :value="item.value">
             </el-option>
@@ -29,7 +33,8 @@
           </el-select>
         </li>
         <li>
-          <el-select size="small" v-model="districtVal" value-key="cityName" @change="search('district')" placeholder="请选择县区">
+          <el-select size="small" v-model="districtVal" value-key="cityName" @change="search('district')"
+            placeholder="请选择县区">
             <el-option v-for="item in districtOpts" :key="item.value.cityName" :label="item.cityName"
               :value="item.value">
             </el-option>
@@ -131,7 +136,8 @@
       <my-ecollect v-if="myEcollectVisible" @closeMyEcollect="myEcollectHide" :my-ecollect-visible="myEcollectVisible"
         :my-ecollect-list="myEcollectList" :word-cloud-data="wordCouldData"></my-ecollect>
       <!-- 上位指导选择文档弹窗 -->
-      <guide-plan @guidePlanClose="guidePlanClose" :guide-plan-visible="guidePlanVisible">
+      <guide-plan @guidePlanClose="guidePlanClose" :guide-plan-visible="guidePlanVisible"
+        :guide-docu-counts="guideDocuCounts">
       </guide-plan>
       <!-- 报告参考政府工作报告图表 -->
       <report-chart v-if="isReportChart" :chart-data="DocumentsType"></report-chart>
@@ -152,14 +158,20 @@ import {
   saveSummaryInfo,
   login
 } from '../../api/api'
-import { getStructure, getEcollect } from '@/api/thinkingApi'
+import {
+  getStructure,
+  getEcollect,
+  getGuideCounts,
+  getReportCounts,
+  getGraphReportCounts
+} from '@/api/thinkingApi'
 import axios from 'axios'
 import mUtilsFn from '@/config/mUtils.js'
 import leftMenus from './components/leftMenus/leftMenus'
 import rightStructure from './components/rightStructure/rightStructure'
 import myEcollect from './components/myEcollect/myEcollect'
 import guidePlan from './components/guidePlan/guidePlan'
-import reportChart from '@/components/reportChart/reportChart'
+import reportChart from './components/reportChart/reportChart'
 import singleDocument from '@/components/singleDocument/singleDocument'
 import uploadDocu from './components/uploadDocu/uploadDocu'
 export default {
@@ -181,7 +193,153 @@ export default {
       documentWrapTop: null, // 地图弹窗左边位置
       documentWrapLeft: null, // 地图弹窗顶部位置
       docuWrapData: {}, // 地图弹窗数据
-      wordCouldData: [], // 词云数据
+      wordCouldData: [
+        {
+          name: "十九大精神",
+          value: 15000
+        },
+        {
+          name: "两学一做",
+          value: 10081
+        },
+        {
+          name: "中华民族",
+          value: 9386
+        },
+        {
+          name: "马克思主义",
+          value: 7500
+        },
+        {
+          name: "民族复兴",
+          value: 7500
+        },
+        {
+          name: "社会主义制度",
+          value: 6500
+        },
+        {
+          name: "国防白皮书",
+          value: 6500
+        },
+        {
+          name: "创新",
+          value: 6000
+        },
+        {
+          name: "民主革命",
+          value: 4500
+        },
+        {
+          name: "文化强国",
+          value: 3800
+        },
+        {
+          name: "国家主权",
+          value: 3000
+        },
+        {
+          name: "武装颠覆",
+          value: 2500
+        },
+        {
+          name: "领土完整",
+          value: 2300
+        },
+        {
+          name: "安全",
+          value: 2000
+        },
+        {
+          name: "从严治党",
+          value: 1900
+        },
+        {
+          name: "现代化经济体系",
+          value: 1800
+        },
+        {
+          name: "国防动员",
+          value: 1700
+        },
+        {
+          name: "信息化战争",
+          value: 1600
+        },
+        {
+          name: "局部战争",
+          value: 1500
+        },
+        {
+          name: "教育",
+          value: 1200
+        },
+        {
+          name: "职业教育",
+          value: 1100
+        },
+        {
+          name: "兵法",
+          value: 900
+        },
+        {
+          name: "一国两制",
+          value: 569
+        },
+        {
+          name: "五位一体",
+          value: 456
+        },
+        {
+          name: "共享经济",
+          value: 123
+        },
+        {
+          name: "营改增",
+          value: 752
+        },
+        {
+          name: "三去一降一补",
+          value: 375
+        },
+        {
+          name: "全民健身",
+          value: 256
+        },
+        {
+          name: "三严三实",
+          value: 230
+        },
+        {
+          name: "工匠精神",
+          value: 50
+        },
+        {
+          name: "创新型国家",
+          value: 120
+        },
+        {
+          name: "精准脱贫",
+          value: 300
+        },
+        {
+          name: "蓝天保卫战",
+          value: 400
+        },
+        {
+          name: "双一流",
+          value: 450
+        },
+        {
+          name: "社会主义核心价值观",
+          value: 500
+        },
+        {
+          name: "城镇调查失业率",
+          value: 200
+        }
+      ], // 词云数据
+      guideDocuCounts: [], // 某市县区上位指导文档数量
       isReportChart: false, // 控制报告参考政府工作报告图表显隐
       myEcollectVisible: false, // 控制我的收藏显隐
       guidePlanVisible: false, // 控制上位指导选择文档弹窗显隐
@@ -201,7 +359,10 @@ export default {
         }
       ],
       documentValue: '',
-      DocumentsType: {}, // 各市文档报告类型数据
+      DocumentsType: {
+        countsData: [],
+        chartData: []
+      }, // 各市文档报告类型数据
       structureYears: [
         {
           value: '2006',
@@ -227,7 +388,7 @@ export default {
         file_type: '0',
         file_year: '2016'
       },
-      
+
       provinceVal: {
         cityName: '浙江省',
         center: {
@@ -273,8 +434,8 @@ export default {
       }
     })
     this.echartsMap.on('click', this.echartsMapClick)
-    this.getCiYunFn()
-    this.getDocumentsTypeFn()
+    // this.getCiYunFn()
+    this.getReportCountsFn('330000')
   },
   methods: {
     // 文档素材展开收起
@@ -314,9 +475,12 @@ export default {
       })
     },
     // 获取各市文档报告类型数据
-    getDocumentsTypeFn() {
-      getDocumentsType().then(res => {
-        this.DocumentsType = res.data
+    getReportCountsFn(cityCode) {
+      getReportCounts({ city_code: cityCode }).then(res => {
+        this.DocumentsType.countsData = res.data
+        getGraphReportCounts({ city_code: cityCode }).then(res => {
+          this.DocumentsType.chartData = res.data
+        })
       })
     },
     getEcollectFn() {
@@ -326,10 +490,21 @@ export default {
         }
       })
     },
-    // 将中间图表导出为图片
-    // saveAsImage() {
-    //   mUtilsFn.saveAsImage(this.echartsMap)
-    // },
+    // 获取某市县区上位指导文档数量
+    getGuideCounts(areaCode) {
+      getGuideCounts({ city_code: areaCode }).then(res => {
+        if (res.data.length != 0) {
+          this.guidePlanVisible = true
+          this.guideDocuCounts = res.data
+        } else {
+          this.$message({
+            message: '该地区暂无上位指导',
+            type: 'warning'
+          })
+          return
+        }
+      })
+    },
     // 打开我的收藏弹窗
     myCollectClick() {
       this.myEcollectVisible = true
@@ -360,15 +535,18 @@ export default {
           this.rightHistoryTab = true
           this.guidePlanVisible = false
           this.isReportChart = false
+          this.$store.commit('SET_LEFT_TAB_ACTIVE', '历史借鉴')
           break
         case 1:
           this.isReportChart = false
           this.DocumentWrapClose()
+          this.$store.commit('SET_LEFT_TAB_ACTIVE', '上位指导')
           break
         case 2:
           this.isReportChart = true
           this.rightHistoryTab = false
           this.DocumentWrapClose()
+          this.$store.commit('SET_LEFT_TAB_ACTIVE', '报告参考')
           break
       }
     },
@@ -468,9 +646,6 @@ export default {
       }
     },
     search(area, checkedCity) {
-      if (this.leftTabActive === 1 && area === 'city') {
-        this.guidePlanVisible = true
-      }
       let levelList = null
       if (checkedCity) {
         levelList = {
@@ -487,8 +662,7 @@ export default {
       } else {
         levelList = this[area + 'Val']
       }
-      console.log(levelList);
-      
+
       let adcode = levelList.cityCode
       this.cityName = levelList.cityName
 
@@ -501,10 +675,14 @@ export default {
           this.getData(result.districtList[0], area, adcode)
         }
       })
+
+      if (this.leftTabActive === 1 && area === 'city') {
+        this.getGuideCounts(levelList.cityCode)
+      }
     },
     mapBack(level) {
       this.DocumentWrapClose()
-      if(level === 'country'){
+      if (level === 'country') {
         this.district.search('中国', (status, result) => {
           if (status == 'complete') {
             this.getData(result.districtList[0], 'province', 100000)

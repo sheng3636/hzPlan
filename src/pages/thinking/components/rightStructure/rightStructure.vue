@@ -151,7 +151,7 @@ export default {
       this.isMenu = event
       this.summaryVisible = event1
     },
-    // 直接收藏收藏
+    // 直接收藏
     collectStatusFn(title, content) {
       this.collectParams.title = title
       this.collectParams.content = content

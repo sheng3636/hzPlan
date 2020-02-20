@@ -22,13 +22,19 @@
         </div>
         <div class="ecollectItem">
           <h3 class="ecollectClass">上位指导</h3>
-          <div class="ecolllectList">
-            <h2 class="title">《浙江省“十四五”国民经济和社会发展规划纲要》</h2>
-            <p class="content">【举起旗帜】以习近平新时代中国特色社会主义思想为指导，全面贯彻落实党的十九大精神，</p>
-            <p class="content">【拟定战略】以“八八战略”为总纲，</p>
-            <p class="content">【明确要求】以人的现代化为导向，以推动高质量发展为主题，以深化供给侧结构性改革为主线，以创新驱动和竞争力提升为基本立足点，以深化改革扩大开放为根本动力，</p>
-            <p class="content">【提出任务】进一步实施富民强省十大行动计划，促进区域协调发展，加强生态文明建设，确保社会和谐稳定，</p>
-            <p class="content">【描绘目标】为高水平建设社会主义现代化开好局、起好步</p>
+          <div class="ecolllectList" v-for="(item1,index1) in myEcollectList.upper_guide" :key="index1">
+            <h2 class="title">《{{item1.SOURCES}}》</h2>
+            <div class="content" v-for="(item2,index2) in item1.LIST" :key="index2">
+              <p class="list">
+                <span>【{{item2.TITLE}}】</span>
+                <span>{{item2.CONTENT}}</span>
+              </p>
+              <p class="EcollectTool">
+                <i class="el-icon-document" @click="handleCopy(item2.CONTENT,$event)"></i>
+                <i class="el-icon-edit" @click="editCollect(item2.TITLE,item2.CONTENT,item2.SOURCES,item2.COLLECT_NO)"></i>
+                <i class="el-icon-delete" @click="delEcollectFn(item2.COLLECT_NO)"></i>
+              </p>
+            </div>
           </div>
         </div>
         <div class="ecollectItem">

@@ -6,6 +6,12 @@ export function getDocuInfo() {
     method: 'get'
   })
 }
+export function getAddress() {
+  return request({
+    url: '/programme/word/queryAddress',
+    method: 'get'
+  })
+}
 // 保存摘要
 export function saveContent(data) {
   return request({
@@ -42,6 +48,46 @@ export function getStructure(params) {
 export function getEcollect(params) {
   return request({
     url: '/programme/word/queryCollection',
+    method: 'get',
+    params
+  })
+}
+// 获取报告参考文档类型数量
+export function getReportCounts(params) {
+  return request({
+    url: '/programme/word/query_report',
+    method: 'get',
+    params
+  })
+}
+// 获取报告参考各市县区文档类型数量图表
+export function getGraphReportCounts(params) {
+  return request({
+    url: '/programme/word/query_graph',
+    method: 'get',
+    params
+  })
+}
+// 获取某市县区上位指导文档数量
+export function getGuideCounts(params) {
+  return request({
+    url: '/programme/word/query_document',
+    method: 'get',
+    params
+  })
+}
+// 获取某市县区上位指导文档
+export function getGuideDocu(params) {
+  return request({
+    url: '/programme/word/querydocument',
+    method: 'get',
+    params
+  })
+}
+// 上位指导--查询文档内容
+export function getGuideDocuAreaContent(params) {
+  return request({
+    url: '/programme/word/selectNan',
     method: 'get',
     params
   })

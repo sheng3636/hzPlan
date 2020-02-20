@@ -10,22 +10,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/api': {
-      //   target: 'https://www.fastmock.site/mock/1f3a07523606cd78e586a1780f46c328/', //前端数据Mock接口
-      //   changeOrigin: true, //允许跨域
-      //   pathRewrite: {
-      //     '^/api': '' //重写接口
-      //   }
-      // },
-      // '/baidu': {
-      //   target: 'http://api.map.baidu.com/', //前端接口
-      //   changeOrigin: true, //允许跨域
-      //   pathRewrite: {
-      //     '^/baidu': '' //重写接口
-      //   }
-      // },
       '/imp': {
-        target: 'http://192.168.0.117:8083/', //前端接口
+        target: 'http://47.103.104.87:8880/AuxiliaryPlanning/', //前端接口
+        // target: 'http://192.168.0.117:8083/', //前端接口
         changeOrigin: true, //允许跨域
         pathRewrite: {
           '^/imp': '' //重写接口

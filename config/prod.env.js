@@ -1,5 +1,5 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  API_ROOT: '"https://www.fastmock.site/mock/1f3a07523606cd78e586a1780f46c328"' //本地接口请求前缀
+  imp: '"http://47.103.104.87:8880/AuxiliaryPlanning/"' //线上接口请求前缀
 }

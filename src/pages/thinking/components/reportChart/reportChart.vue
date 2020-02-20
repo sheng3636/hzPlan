@@ -3,19 +3,19 @@
   <ul class="documentType">
     <li>
       <p>政府工作报告</p>
-      <p>{{chartData.governmentCount}}</p>
+      <p>{{chartData.countsData[0].case}}</p>
     </li>
     <li>
       <p>党代会报告</p>
-      <p>{{chartData.partyCount}}</p>
+      <p>{{chartData.countsData[1].case}}</p>
     </li>
     <li>
       <p>全会报告</p>
-      <p>{{chartData.countryCount}}</p>
+      <p>{{chartData.countsData[2].case}}</p>
     </li>
     <li>
       <p>中期评估</p>
-      <p>{{chartData.duringCount}}</p>
+      <p>{{chartData.countsData[3].case}}</p>
     </li>
   </ul>
   <div id="reportChart"></div>
@@ -38,7 +38,7 @@ export default {
     },
   },
   mounted(){
-    this.reportChart(this.chartData.echartData)
+    this.reportChart(this.chartData.chartData)
   },
   methods: {
     reportChart(data) {

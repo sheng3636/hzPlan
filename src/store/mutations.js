@@ -10,5 +10,8 @@ export default {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_LEFT_TAB_ACTIVE: (state,activeData) => {
+    state.leftTabActive = activeData
   }
 }

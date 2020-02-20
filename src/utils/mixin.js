@@ -1,13 +1,14 @@
 export const menuMixin = {
   data() {
+    let collectParams = {
+      collect_no: '',
+      title: '',
+      content: '',
+      source: '',
+      type: this.$store.state.leftTabActive
+    }
     return {
-      collectParams: {
-        collect_no:'',
-        title: '',
-        content: '',
-        source: '',
-        type: '历史借鉴'
-      },
+      collectParams: collectParams,
       isMenu:false,
       selectTxt: '', // 鼠标选中文字
       menuTop: null, // 选中文字后显示菜单距离顶部位置
