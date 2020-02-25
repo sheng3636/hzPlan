@@ -32,10 +32,10 @@
         </div>
         <div class="content scroll" v-if="whichActive" v-html="docuAll">
         </div>
-        <ul class="searchResult" v-if="isSearchReault">
+        <ul class="searchResult scroll" v-if="isSearchReault">
           <i class="el-icon-close" @click="closeSearchResult"></i>
           <li v-for="(item,index) in searchResult" :key="index">
-            <pre v-html="item.results"></pre>
+            <p>{{item}}</p>
             <!-- <span>
               <i class="el-icon-star-off"></i>
               <i class="el-icon-location-outline"></i>
@@ -90,7 +90,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.guideDocuCounts)
   },
   methods: {
     blockToggle(event, event1) {
@@ -103,10 +102,11 @@ export default {
         keyword: this.searchValue,
         FOLDER_NO: folderNo
       }).then(res => {
-        if (res.data.length === 0) {
+        console.log(res)
+        if (res.data.results.length === 0) {
           this.$message.warning('无搜索结果')
         } else {
-          this.searchResult = res.data
+          this.searchResult = res.data.results
           this.isSearchReault = true
         }
       })

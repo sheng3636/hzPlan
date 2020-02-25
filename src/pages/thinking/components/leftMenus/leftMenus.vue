@@ -32,7 +32,7 @@ export default {
         this.leftShow = true
       } else {
         this.leftShow = false
-        window.location.href="http://139.196.226.113/ditu/?id=1"
+        window.location.href="http://118.190.204.249:8103/#/home?id=1"
       }
     },
     // 点击左侧tab向父组件传递节点信息
