@@ -92,3 +92,37 @@ export function getGuideDocuAreaContent(params) {
     params
   })
 }
+
+
+// 报告参考-查询政府工作报告
+export function getGovernmentWorkReportsApi(params) {
+  return request({
+    url: '/programme/word/government_work',
+    method: 'get',
+    params
+  })
+}
+// 报告参考-查询政府工作报告全文
+export function getGovernmentWorkReportsFullTxtApi(params) {
+  return request({
+    url: '/programme/word/querydocumentTwo',
+    method: 'get',
+    params
+  })
+}
+// 报告参考-查询政府工作报告下拉框
+export function getGovernmentWorkReportsoptsApi(params) {
+  return request({
+    url: '/programme/word/queryComboBox',
+    method: 'get',
+    params
+  })
+}
+// 报告参考-查询热词
+export function gethotWordApi(data) {
+  return request({
+    url: '/programme/word/hot_word',
+    method: 'post',
+    data
+  })
+}

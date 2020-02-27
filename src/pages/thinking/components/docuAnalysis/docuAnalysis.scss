@@ -1,4 +1,4 @@
-@import '../../assets/style/mixin.scss';
+@import '@/assets/style/mixin.scss';
 .singleDocumetDialog {
   .inner{
     padding: 10px 20px;
@@ -30,10 +30,12 @@
       .rightArticle {
         max-height: 450px;
         text-indent: 27px;
+        overflow-x: hidden;
       }
       .rightArticle,
       .halfWidth {
         width: 50%;
+        overflow-x: hidden;
       }
     }
     #singleDocuChart{

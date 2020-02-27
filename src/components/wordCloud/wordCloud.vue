@@ -43,6 +43,11 @@ export default {
     this.chart.dispose()
     this.chart = null
   },
+  watch: {
+      data(val) {
+        this.initChart()
+      }
+    },
   methods: {
     initChart() {
       this.chart = this.$echarts.init(

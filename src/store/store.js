@@ -12,7 +12,7 @@ const state = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    leftTabActive: '历史借鉴'
+    leftTabActive: 0
   }
 }
 
