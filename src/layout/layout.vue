@@ -13,17 +13,6 @@ export default {
   name: 'layoutMain',
   components: {
     headTop
-  },
-  data() {
-    return {
-      
-    }
-  },
-  computed: {
-    
-  },
-  methods:{
-    
   }
 }
 </script>

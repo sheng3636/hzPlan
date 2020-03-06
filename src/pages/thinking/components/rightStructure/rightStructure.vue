@@ -125,7 +125,6 @@
 </template>
 <script>
 import { saveContent } from '@/api/thinkingApi'
-import { collectStatus } from '@/api/api'
 import summaryInfo from '../summaryInfo/summaryInfo'
 import selectMenus from '../selectMenus/selectMenus'
 import {menuMixin} from '@/utils/mixin.js'
@@ -133,18 +132,11 @@ export default {
   name: 'rightStructure',
   components: { summaryInfo, selectMenus },
   mixins: [menuMixin],
-  data() {
-    return {
-    }
-  },
   props: {
     docuWrapData: {
       type: Object,
       default: {}
     }
-  },
-  mounted() {
-    
   },
   methods: {
     blockToggle (event,event1) {

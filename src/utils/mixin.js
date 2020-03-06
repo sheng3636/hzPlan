@@ -19,10 +19,6 @@ export const menuMixin = {
       summaryVisible: false, // 控制摘要弹窗显隐
     }
   },
-  mounted() {},
-  created() {
-
-  },
   methods: {
     // 选中文字后显示菜单
     selectText(e, title, content) {
@@ -57,7 +53,7 @@ export const menuMixin = {
     // 保存摘要并关闭弹窗
     submitSummaryInfo() {
       this.summaryVisible = false
-      this.$parent.getEcollectFn()
+      this.getEcollectFn()
     },
     // 关闭摘要弹窗
     closeSummaryInfo() {
@@ -68,7 +64,8 @@ export const menuMixin = {
 export const mapMixin = {
   data() {
     return {
-      provinceVal: {
+      provinceOpts: [], // 左侧省份下拉框数据
+      provinceVal: { // 左侧省份下拉框绑定值
         cityName: '浙江省',
         center: {
           P: 30.287459,
@@ -79,17 +76,16 @@ export const mapMixin = {
         levelSub: 'province',
         cityCode: '330000'
       },
-      cityVal: {},
-      districtVal: {},
-      provinceOpts: [],
-      cityOpts: [],
-      districtOpts: [],
+      cityOpts: [], // 左侧市下拉框数据
+      cityVal: {}, // 左侧市下拉框绑定值
+      districtOpts: [], // 左侧区县下拉框数据
+      districtVal: {}, // 左侧区县下拉框绑定值
+      map: null, // 高德地图实例
+      district: null, // 行政区查询对象
+      mapData: [],
       cityName: '中国',
       geoJsonData: '',
-      echartsMap: null, // 中间地图echarts实例
-      map: null,
-      district: null,
-      mapData: []
+      echartsMap: null // 中间地图实例
     }
   },
   mounted() {
@@ -107,7 +103,7 @@ export const mapMixin = {
     this.district = new AMap.DistrictSearch(opts) //注意：需要使用插件同步下发功能才能这样直接使用
     this.district.search('中国', (status, result) => {
       if (status == 'complete') {
-        this.getData(result.districtList[0], 'province', 100000)
+        // this.getData(result.districtList[0], 'province', 100000)
         this.search('province', 'checkedCity')
       }
     })
@@ -136,6 +132,7 @@ export const mapMixin = {
 
           this.loadMapChart(this.cityName, mapJson)
           this.geoJsonData = mapJson
+          console.log(mapJson)
         })
       })
     },
@@ -235,7 +232,7 @@ export const mapMixin = {
         }
       })
 
-      if (this.leftTabActive === 1 && area === 'city') {
+      if (this.$store.state.leftTabActive === 1 && area === 'city') {
         this.getGuideCounts(levelList.cityCode)
       }
     },
@@ -298,7 +295,7 @@ export const mapMixin = {
     },
     // 地图点击事件-获取各市县五年规划纲要指导思想
     echartsMapClick(params) {
-      if (this.leftTabActive === 0) {
+      if (this.$store.state.leftTabActive === 0) {
         if (params.data.level === 'city') {
           this.structureParams.city_type = '0'
         } else if (params.data.level === 'district') {
@@ -309,10 +306,10 @@ export const mapMixin = {
         this.structureParams.city_code = params.data.cityCode
         getStructure(this.structureParams).then(res => {
           if (res.data) {
-            this.documentWrapTop = params.event.offsetY
-            this.documentWrapLeft = params.event.offsetX
+            this.docuWrapTop = params.event.offsetY
+            this.docuWrapLeft = params.event.offsetX
             this.docuWrapData = res.data
-            this.isDocumentWrap = true
+            this.isDocuWrap = true
           } else {
             this.$message({
               message: '该地区未在该时段上传文档',

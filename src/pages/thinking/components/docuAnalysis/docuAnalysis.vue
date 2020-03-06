@@ -6,8 +6,8 @@
         <div class="tabRow">
           <el-button v-if="whichAnalyze" @click="analyzeType(0)">双文档对比分析</el-button>
           <p v-if="!whichAnalyze" @click="analyzeType(1)">
-            <el-select v-model="docuValue" placeholder="请选择" @change="selectChange">
-              <el-option v-for="(item,index) in docuOpts" :key="index" :label="item.docuname" :value="item.folderno">
+            <el-select v-model="docuValue" value-key="folderno" placeholder="请选择" @change="selectChange">
+              <el-option v-for="item in docuOpts" :key="item.value.folderno" :label="item.name" :value="item.value">
               </el-option>
             </el-select>
             <el-button type="success" plain>单文档分析</el-button>
@@ -51,19 +51,17 @@ export default {
       governmentWorkReportsFullTxtObj: {},
       governmentWorkReportsFullTxtObj1: {},
       whichAnalyze: true,
-      docuValue: '',
+      docuValue: {},
       width: '40%',
-      docuOpts: []
+      docuOpts: [],
+      wordCloudData:[],
+      compareArr:[]
     }
   },
   props: {
     singleDocumentVisible: {
       type: Boolean,
       default: false
-    },
-    wordCloudData: {
-      type: Array,
-      default: []
     },
     folderNo: {
       type: String,
@@ -73,13 +71,14 @@ export default {
   mounted() {
     this.getGovernmentWorkReportsFullTxtFn()
     this.getGovernmentWorkReportsoptsFn()
-          
   },
   methods: {
     // 选择对比文档
     selectChange(e) {
-      getGovernmentWorkReportsFullTxtApi({ folderno: this.docuValue }).then(
+      getGovernmentWorkReportsFullTxtApi({ folderno: this.docuValue.folderno }).then(
         res => {
+          
+          this.hotWordFn(this.docuValue.wrodcontent)
           this.governmentWorkReportsFullTxtObj1 = res.data
           this.docuTitle =
             this.governmentWorkReportsFullTxtObj.docuname +
@@ -96,8 +95,10 @@ export default {
         this.whichAnalyze = false
       } else {
         this.whichAnalyze = true
-        this.docuValue = ''
         this.docuTitle = this.governmentWorkReportsFullTxtObj.docuname
+        this.docuValue = {}
+        this.governmentWorkReportsFullTxtObj1 = {}
+        this.getGovernmentWorkReportsFullTxtFn()
       }
     },
     // 关闭文件分析弹窗
@@ -118,6 +119,7 @@ export default {
     getGovernmentWorkReportsFullTxtFn() {
       getGovernmentWorkReportsFullTxtApi({ folderno: this.folderNo }).then(
         res => {
+          this.compareArr = []
           this.governmentWorkReportsFullTxtObj = res.data
           this.docuTitle = res.data.docuname
           this.hotWordFn(res.data.wrodcontent)
@@ -126,9 +128,13 @@ export default {
     },
     // 报告参考-热词查询
     hotWordFn(textArr) {
-      let compareArr = []
-      compareArr.push(textArr)
-      gethotWordApi({ text: compareArr, value: '20' }).then(res => {
+      if(this.compareArr.length === 0 || this.compareArr.length === 1){
+        this.compareArr.push(textArr)
+      } else {
+        this.compareArr.pop()
+        this.compareArr.push(textArr)
+      }
+      gethotWordApi({ text: this.compareArr, value: '20' }).then(res => {
         this.wordCloudData = res.data
       })
     },
@@ -138,11 +144,18 @@ export default {
         this.docuOpts = res.data
       })
     },
+    getEcollectFn() {
+      getEcollect().then(res => {
+        if (res.data) {
+          this.myEcollectList = res.data
+        }
+      })
+    },
     // 热词echarts
     hotWord(data) {
       let legends = []
       let dataValue = []
-      for (let item of data.values()) {
+      for (let item of data.slice(0,15).values()) {
         legends.push(item.name)
         dataValue.push(item.value)
       }

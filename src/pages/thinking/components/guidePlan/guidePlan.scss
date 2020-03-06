@@ -93,14 +93,24 @@
     }
 
     .content {
-      max-height: 450px;
+      max-height: 590px;
       .section{
         margin-bottom: 5px;
         text-indent: 27px;
       }
     }
-    .shortHeight{
-      max-height: 300px;
+    &.contentWrap {
+      display: flex;
+
+      .contentLeft {
+        width: 70%;
+
+      }
+
+      .contentRight {
+        width: 30%;
+
+      }
     }
   }
 }

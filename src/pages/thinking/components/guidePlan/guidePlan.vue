@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog :title="guidePlantitle" :visible.sync="guidePlanVisible" :close-on-click-modal="false"
-      :close-on-press-escape="false" :show-close="false" custom-class="guidePlanDialog" width="55%">
+      :close-on-press-escape="false" :show-close="false" custom-class="guidePlanDialog" width="70%">
       <div class="inner scroll" v-if="isArticle">
         <div class="documentInfo">
           <p class="middleLine"></p>
@@ -16,33 +16,37 @@
           </li>
         </ul>
       </div>
-      <div class="inner" v-if="!isArticle" style="overflow: hidden;">
-        <div class="searchWrap">
-          <div class="searchInput">
-            <el-input class="searchValue" placeholder="请输入搜索内容" v-model="searchValue"></el-input>
-            <i class="el-icon-search" @click="showSearchResult(folderNo)"></i>
+      <div class="inner contentWrap" v-if="!isArticle" style="overflow: hidden;">
+        <div class="contentLeft">
+          <div class="searchWrap">
+            <div class="searchInput">
+              <el-input class="searchValue" placeholder="请输入搜索内容" v-model="searchValue"></el-input>
+              <i class="el-icon-search" @click="showSearchResult(folderNo)"></i>
+            </div>
+            <p class="tabRow">
+              <span class="articleType" :class="{'active':whichActive}" @click="articleTypeClick(0)">全文</span>
+              <span class="articleType" :class="{'active':!whichActive}" @click="articleTypeClick(1)">指导思想</span>
+            </p>
           </div>
-          <p class="tabRow">
-            <span class="articleType" :class="{'active':whichActive}" @click="articleTypeClick(0)">全文</span>
-            <span class="articleType" :class="{'active':!whichActive}" @click="articleTypeClick(1)">指导思想</span>
-          </p>
-        </div>
-        <div class="content scroll shortHeight" v-if="!whichActive">
-          {{docuGuide}}
-        </div>
-        <div class="content scroll" v-if="whichActive" v-html="docuAll">
-        </div>
-        <ul class="searchResult scroll" v-if="isSearchReault">
-          <i class="el-icon-close" @click="closeSearchResult"></i>
-          <li v-for="(item,index) in searchResult" :key="index">
-            <p>{{item}}</p>
-            <!-- <span>
+          <div class="content scroll" v-if="!whichActive">
+            {{docuGuide}}
+          </div>
+          <div class="content scroll" v-if="whichActive" v-html="docuAll">
+          </div>
+          <ul class="searchResult scroll" v-if="isSearchReault">
+            <i class="el-icon-close" @click="closeSearchResult"></i>
+            <li v-for="(item,index) in searchResult" :key="index" v-html="item">
+              <!-- <p>{{item}}</p> -->
+              <!-- <span>
               <i class="el-icon-star-off"></i>
               <i class="el-icon-location-outline"></i>
             </span> -->
-          </li>
-        </ul>
-        <right-structure :docu-wrap-data="docuWrapData"></right-structure>
+            </li>
+          </ul>
+        </div>
+        <div class="contentRight">
+          <right-structure :docu-wrap-data="docuWrapData"></right-structure>
+        </div>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="guidePlanClose">取消</el-button>
@@ -69,7 +73,7 @@ export default {
       docuWrapData: {},
       isArticle: true,
       searchValue: '',
-      searchResult:[],
+      searchResult: [],
       folderNo: '',
       whichActive: false,
       isSearchReault: false
@@ -89,8 +93,7 @@ export default {
       default: []
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     blockToggle(event, event1) {
       this.summaryVisible = event1
@@ -147,12 +150,6 @@ export default {
 </style>
 <style lang="scss">
 .guidePlanDialog .constractArea .constructWrap {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  max-height: 205px;
-  .constructItem1 {
-    width: 49.5%;
-  }
+  max-height: 470px;
 }
 </style>

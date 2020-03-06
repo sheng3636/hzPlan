@@ -12,7 +12,7 @@ const state = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    leftTabActive: 0
+    leftTabActive: 0 // 左侧基本思路分析列表选中项
   }
 }
 

@@ -2,7 +2,8 @@
   <ul class="mainLeft">
     <li>
       <h3 class="titleRow" :class="{'active':leftShow}" @click="tabClick(0)">
-        <i class="iconfont iconchuzhisilu"></i>基本思路分析
+        <i class="iconfont iconchuzhisilu"></i>
+        <span>基本思路分析</span>
       </h3>
       <ul class="listMain" v-if="leftShow">
         <li :class="{'active':whichSelect === 0}" @click="whichMenu(0)">历史借鉴</li>
@@ -12,7 +13,8 @@
     </li>
     <li>
       <h3 class="titleRow" :class="{'active':!leftShow}" @click="tabClick(1)">
-        <i class="iconfont iconmubiao"></i>发展目标分析
+        <i class="iconfont iconmubiao"></i>
+        <span>发展目标分析</span>
       </h3>
     </li>
   </ul>
@@ -22,23 +24,24 @@ export default {
   name: 'leftMenus',
   data() {
     return {
-      whichSelect:0,
+      whichSelect:0, // 基本思路分析列表选中项
       leftShow: true, // 控制基本思路分析列表、发展目标分析列表显隐
     }
   },
   methods: {
+    // 基本思路分析列表、发展目标分析列表事件
     tabClick(flag){
       if(flag === 0) {
         this.leftShow = true
       } else {
         this.leftShow = false
-        window.location.href="http://118.190.204.249:8103/#/home?id=1"
+        // window.location.href="http://118.190.204.249:8103/#/home?id=1"
       }
     },
-    // 点击左侧tab向父组件传递节点信息
+    // 点击左侧tab点击事件并向父组件传递节点信息
     whichMenu(data) {
-      this.$emit('menusClick', data)
       this.whichSelect = data
+      this.$emit('menusClick', data)
     }
   }
 }

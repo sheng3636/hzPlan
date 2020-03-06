@@ -40,11 +40,9 @@
         <div class="ecollectItem">
           <h3 class="ecollectClass">报告参考</h3>
           <div class="ecolllectList">
-            <h2 class="title">《台州市政府工作报告（2019年）》</h2>
-            <word-cloud :data="wordCloudData"></word-cloud>
-            <p class="content">
-              要高举习近平新时代中国特色社会主义思想伟大旗帜，全面贯彻党的十九大和十九届二中、三中全会精神，以“八八战略”再深化、改革开放再出发为主题，以高质量发展为主线，以现代化湾区建设统领“再创民营经济新辉煌”和“新时代美丽台州建设”，突出稳企业、增动能、保平安，统筹推进稳增长、促改革、调结构、惠民生、防风险工作，早日跻身全省经济综合实力第二方阵前列，以优异成绩庆祝新中国成立70周年。
-            </p>
+            <h2 class="title">《{{myEcollectList.report_reference.TITLE}}》</h2>
+            <word-cloud :data="myEcollectList.report_reference.FIRST_HOT_WORD"></word-cloud>
+            <p class="content">{{myEcollectList.report_reference.GUIDING_IDEOLOGY}}</p>
             <p class="content">对比分析：《台州市政府工作报告（2019年）》VS《台州市政府工作报告（2018年）》</p>
             <div id="hotWord"></div>
           </div>
@@ -132,7 +130,7 @@
   </div>
 </template>
 <script>
-import { delEcollect } from '@/api/thinkingApi'
+import { getEcollect,delEcollect } from '@/api/thinkingApi'
 import summaryInfo from '../summaryInfo/summaryInfo'
 import wordCloud from '@/components/wordCloud/wordCloud'
 import clip from '@/utils/clipboard'
@@ -141,24 +139,19 @@ export default {
   name: 'myEcllect',
   components: { summaryInfo, wordCloud },
   mixins: [menuMixin],
+  data(){
+    return {
+      myEcollectList:{}
+    }
+  },
   props: {
     myEcollectVisible: {
       type: Boolean,
       default: false
-    },
-    myEcollectList: {
-      type: Object,
-      default: {}
-    },
-    wordCloudData: {
-      type: Array,
-      default: []
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.hotWord()
-    })
+    this.getEcollectFn()
   },
   methods: {
     // 复制收藏项
@@ -177,8 +170,20 @@ export default {
             message: res.message,
             type: res.code === '0' ? 'success' : 'error'
           })
-          this.$parent.getEcollectFn()
+          this.getEcollectFn()
         })
+      })
+    },
+    // 获取收藏数据
+    getEcollectFn() {
+      getEcollect().then(res => {
+        if (res.data) {
+          this.myEcollectList = res.data
+          console.log(res.data.report_reference.FIRST_HOT_WORD)
+          this.$nextTick(()=>{
+            this.hotWord(res.data.report_reference.FIRST_HOT_WORD)
+          })
+        }
       })
     },
     // 关闭我的收藏弹窗
@@ -186,7 +191,13 @@ export default {
       this.$emit('closeMyEcollect')
     },
     // 热词echarts
-    hotWord() {
+    hotWord(data) {
+      let legends = []
+      let dataValue = []
+      for (let item of data.slice(0,15).values()) {
+        legends.push(item.name)
+        dataValue.push(item.value)
+      }
       let charts = this.$echarts.init(document.getElementById('hotWord'))
       let option = {
         color: ['#3398DB'],
@@ -215,23 +226,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: [
-              '发展',
-              '建设',
-              '经济',
-              '民营',
-              '推进',
-              '高质量',
-              '时代',
-              '工作',
-              '深化',
-              '全面',
-              '推动',
-              '治理',
-              '坚持',
-              '产业',
-              '加快'
-            ],
+            data: legends,
             axisTick: {
               alignWithLabel: true
             },
@@ -284,7 +279,7 @@ export default {
                 barBorderRadius: [30, 30, 0, 0]
               }
             },
-            data: [91, 85, 85, 53, 52, 41, 38, 36, 36, 34, 32, 31, 31, 30, 30]
+            data: dataValue
           }
         ]
       }
